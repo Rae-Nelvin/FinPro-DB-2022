@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login</title>
+    <title>Staff Login</title>
     <link rel="stylesheet" href="{{ asset('bootstrap.min.css') }}">
 </head>
 <body>
@@ -12,9 +12,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 offset-md-4" style="margin-top: 45px;">
-                <h4>User Login</h4><hr>
-                <form action="{{ route('user.check') }}" method="post">
+                <h4>Staff Login</h4><hr>
+                <form action="{{ route('staff.check') }}" method="post">
                     @csrf
+                    @if (Session::get('Fail'))
+                        <div class="alert alert-danger">
+                            {{ Session::get('Fail') }}
+                        </div>
+                    @endif
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="text" class="form-control" name="email" placeholder="Enter email address" value="{{ old('email') }}">
@@ -28,8 +33,6 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>
-                    <br>
-                    <a href="{{ route('register') }}">Create new Account</a>
                 </form>
             </div>
         </div>
