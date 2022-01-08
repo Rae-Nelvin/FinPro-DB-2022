@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('btn-css.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
+<body class="bg-gray-900">
 
     <nav class="bg-gray-800">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -48,11 +48,11 @@
     
     <div class="container mx-auto mt-12 pl-14">
         <div class="flex justify-content-end align-content-end">
-            <div class="bg-gray-800 mx-auto w-auto py-2 px-4 rounded-md mb-4 hover:bg-gray-600 transition-all hover:scale-110 transform transition-all cursor-pointer">
+            <div class="bg-gray-800 mx-auto w-auto py-2 px-4 rounded-md mb-4 hover:bg-green-400 transition-all hover:scale-110 transform transition-all cursor-pointer">
                 <a class="text-white font-medium text-2xl" href="{{ route('admin.uploadmenu') }}">Add New</a>
             </div>
         </div>
-        <table class="table-auto text-white border border-black border-collapse">
+        <table class="table-auto text-white border border-black border-collapse mt-8">
             <thead class="bg-gray-800">
                 <tr class="row">
                     <th class="py-4 px-2">No.</th>
@@ -63,7 +63,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody class="bg-gray-400 text-center">
+            <tbody class="bg-gray-600 text-center">
                 <tr class="row border border-black">
                     <td class="font-medium">1</td>
                     <td class="font-medium text-xl">Snickerdoodle</td>

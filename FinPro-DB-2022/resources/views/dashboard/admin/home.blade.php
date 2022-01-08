@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('tailwind-2.css') }}">
 </head>
-<body>
+<body class="bg-gray-900">
 
     <nav class="bg-gray-800">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -43,6 +43,6 @@
             </div>
         </div>
     </nav>
-    
+
 </body>
 </html>

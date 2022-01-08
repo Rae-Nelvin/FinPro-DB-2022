@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('btn-css.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
+<body class="bg-gray-900">
 
     <nav class="bg-gray-800">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
