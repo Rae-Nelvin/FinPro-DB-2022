@@ -41,4 +41,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function pembeliID(){
+        return $this->belongsTo(Transaction::class,'pembeliID','id');
+    }
 }

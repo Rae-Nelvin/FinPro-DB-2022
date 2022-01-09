@@ -47,6 +47,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::view('/home','dashboard.admin.home')->name('home');
         Route::view('/menu','dashboard.admin.menu')->name('menu');
         Route::view('/upload/menu','dashboard.admin.uploads.menu')->name('uploadmenu');
+        Route::view('/transaction','dashboard.admin.transaction')->name('transaction');
+        Route::post('/uploadmenu',[AdminController::class,'uploadmenu'])->name('uploadmenu');
         Route::post('/logout',[StaffController::class,'logout'])->name('logout');
     });
 });

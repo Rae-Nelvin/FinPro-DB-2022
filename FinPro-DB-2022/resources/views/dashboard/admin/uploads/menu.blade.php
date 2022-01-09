@@ -9,6 +9,23 @@
     <link rel="stylesheet" href="{{ asset('tailwind-2.css') }}">
     <link rel="stylesheet" href="{{ asset('btn-css.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+            tinymce.init({
+                selector: 'textarea.konten',
+                height: 200,
+                plugins: 'lists paste',
+                toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+                lists_indent_on_tab: false,
+                forced_root_block : '',
+                paste_as_text: true,
+                setup: function (editor) {
+                editor.on('init', function (e) {
+                editor.setContent(content);
+                });
+                }
+            });
+    </script>
 </head>
 <body class="bg-gray-900">
 
@@ -46,31 +63,53 @@
         </div>
     </nav>
 
-    <div class="container mt-8 mx-auto">
-        <div>
+    <div class="container mt-8 mx-auto text-white mb-12">
+        <div class="flex justify-center my-16">
             <h2 class="font-medium text-3xl">Upload New Menu</h2>
         </div>
-        <div>
-            <form action="#">
-                <div>
-                    <label for="Menu Title">Menu's Title</label>
-                    <input type="text" name="title" placeholder="Input New Menu's Title Here">
+        <div class="flex justify-center my-8">
+            <form action="{{ route('admin.uploadmenu') }}" class="w-1/2 bg-gray-800 rounded-md p-8 space-y-8 text-md" method="post">
+                @csrf
+                <div class="space-y-4 text-xl">
+                    <label for="Menu Title">Menu's Title</label><br>
+                    <input type="text" name="title" placeholder="Input New Menu's Title Here" class="w-full h-14 p-4 rounded-md text-black" value="{{ old('title') }}">
+                    <span class="text-red-600">@error('title'){{ $message }} @enderror</span>
                 </div>
-                <div>
-                    <label for="Picture">Menu's Picture</label>
-                    <input type="file" name="picture">
+                <div class="space-y-4 text-xl">
+                    <label for="Picture">Menu's Picture</label><br>
+                    <input type="file" name="picture" value="{{ old('picture') }}" class="custom-file-input" id="inputGroupFile02" onchange="loadFile(event)"><br>
+                    <img id="output" class="w-3/4 p-2"/><br>
+                    <span class="text-red-600">@error('picture'){{ $message }} @enderror</span>
                 </div>
-                <div>
-                    <label for="Recipe">Menu's Recipee</label>
-                    <input type="text" name="recipee" placeholder="Input New Menu's Recipe Here">
+                <div class="space-y-4">
+                    <label for="Recipe text-xl">Menu's Recipee</label><br>
+                    <textarea name="recipee" placeholder="Input New Menu's Recipe Here" class="w-full h-auto p-4 rounded-md text-black konten text-md" value="{{ old('recipee') }}"></textarea>
+                    <span class="text-red-600 text-xl">@error('recipee'){{ $message }} @enderror</span>
                 </div>
-                <div>
-                    <label for="Quantity">Menu's Quantity</label>
-                    <input type="number" name="quantity" min="1" max="100">
+                <div class="space-y-4 text-xl">
+                    <label for="Quantity">Menu's Quantity</label><br>
+                    <input type="number" name="quantity" min="1" max="100" class="w-full h-10 p-4 rounded-md text-black" value="{{ old('quantity') }}">
+                    <span class="text-red-600">@error('quantity'){{ $message }} @enderror</span>
+                </div>
+                <div class="space-y-4 text-xl justify-center flex">
+                    <button class="bg-gray-700 text-2xl mx-auto w-auto py-2 px-4 rounded-md mb-4 hover:bg-green-400 transition-all hover:scale-110 transform transition-all cursor-pointer" value="submit">Submit</button>
                 </div>
             </form>
         </div>
     </div>
+
+    <script>
+        var loadFile =  function(event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
+    <script>
+        $('#inputGroupFile02').on('change',function(){
+        var fileName = $(this).val();
+        $(this).next('.custom-file-label').html(fileName);
+        })
+    </script>
 
 </body>
 </html>
