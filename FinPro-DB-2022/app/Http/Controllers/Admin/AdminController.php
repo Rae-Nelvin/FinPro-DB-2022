@@ -33,26 +33,25 @@ class AdminController extends Controller
             'jobdesc' => 'required'
         ]);
 
-        $staff = new Staff();
-        Staff::create([
-            'nama' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'gender' 
+    //     $staff = new Staff();
+    //     Staff::create([
+    //         'nama' => $request->name,
+    //         'email' => $request->email,
+    //         'password' => Hash::make($request->password),
 
-        ]);
-        $staff->name = $request->name;
-        $staff->email = $request->email;
-        $staff->password = \Hash::make($request->password);
-        $staff->phone = $request->pnumber;
-        $staff->jobDesc = $request->jobDesc;
-        $staff->linkGambar = $request->picture;
-        $save = $staff->save();
+    //     ]);
+    //     $staff->name = $request->name;
+    //     $staff->email = $request->email;
+    //     $staff->password = \Hash::make($request->password);
+    //     $staff->phone = $request->pnumber;
+    //     $staff->jobDesc = $request->jobDesc;
+    //     $staff->linkGambar = $request->picture;
+    //     $save = $staff->save();
 
-        if ($save){
-            return redirect('admin.dashboard.staff')->with('Success','Your New Staff has been Uploaded');
-        }else{
-            return redirect()->back()->with('Fail','The data has failed to be Uploaded');
-        }
-    }
+    //     if ($save){
+    //         return redirect('admin.dashboard.staff')->with('Success','Your New Staff has been Uploaded');
+    //     }else{
+    //         return redirect()->back()->with('Fail','The data has failed to be Uploaded');
+    //     }
+    // }
 }
