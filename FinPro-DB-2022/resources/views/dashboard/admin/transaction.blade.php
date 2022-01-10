@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Menu</title>
+    <title>Admin Dashboard | Transaction</title>
     <link rel="stylesheet" href="{{ asset('tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('tailwind-2.css') }}">
     <link rel="stylesheet" href="{{ asset('btn-css.css') }}">
@@ -26,7 +26,7 @@
                             <a href="{{ route('admin.home') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
                             <a href="{{ route('admin.menu') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Menus</a>
                             <a href="{{ route('admin.transaction') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Transactions</a>
-                            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Staff</a>
+                            <a href="{{ route('admin.staff') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Staff</a>
                         </div>
                     </div>
                 </div>

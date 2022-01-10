@@ -48,7 +48,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::view('/menu','dashboard.admin.menu')->name('menu');
         Route::view('/upload/menu','dashboard.admin.uploads.menu')->name('uploadmenu');
         Route::view('/transaction','dashboard.admin.transaction')->name('transaction');
+        Route::view('/staff','dashboard.admin.staff')->name('staff');
+        Route::view('/upload/staff','dashboard.admin.uploads.staff')->name('uploadstaff');
         Route::post('/uploadmenu',[AdminController::class,'uploadmenu'])->name('uploadmenu');
+        Route::post('/uploadstaff',[AdminController::class,'uploadstaff'])->name('uploadstaff');
         Route::post('/logout',[StaffController::class,'logout'])->name('logout');
     });
 });

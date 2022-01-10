@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Menu</title>
+    <title>Admin Dashboard | Staff</title>
     <link rel="stylesheet" href="{{ asset('tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('tailwind-2.css') }}">
     <link rel="stylesheet" href="{{ asset('btn-css.css') }}">
@@ -24,9 +24,9 @@
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                             <a href="{{ route('admin.home') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                            <a href="{{ route('admin.menu') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Menus</a>
+                            <a href="{{ route('admin.menu') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Menus</a>
                             <a href="{{ route('admin.transaction') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Transactions</a>
-                            <a href="{{ route('admin.staff') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Staff</a>
+                            <a href="{{ route('admin.staff') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"  aria-current="page">Staff</a>
                         </div>
                     </div>
                 </div>
@@ -46,81 +46,68 @@
         </div>
     </nav>
     
-    <div class="container mx-auto mt-12 pl-14">
+    <div class="container mx-auto mt-12 pl-14 pb-20">
+        @if(Session::get('Success'))
+            <div class="bg-green-600 text-green-100">
+                {{ Session::get('Success') }}
+            </div>
+        @endif
         <div class="flex justify-content-end align-content-end">
             <div class="bg-gray-800 mx-auto w-auto py-2 px-4 rounded-md mb-4 hover:bg-green-400 transition-all hover:scale-110 transform transition-all cursor-pointer">
-                <a class="text-white font-medium text-2xl" href="{{ route('admin.uploadmenu') }}">Add New</a>
+                <a class="text-white font-medium text-2xl" href="{{ route('admin.uploadstaff') }}">Add New</a>
             </div>
         </div>
         <div class="ml-12 mt-4 mb-14">
-            <h1 class="text-white text-4xl font-medium">Menu Lists</h1>
+            <h1 class="text-white text-4xl font-medium">Staff Lists</h1>
         </div>
         <table class="table-auto text-white border border-black border-collapse mt-8">
             <thead class="bg-gray-800">
                 <tr class="row">
                     <th class="py-4 px-2">No.</th>
-                    <th>Menu</th>
-                    <th>Images</th>
-                    <th>Recipes</th>
-                    <th>Amounts</th>
+                    <th>Staff Name</th>
+                    <th>Staff Image</th>
+                    <th>Staff Email</th>
+                    <th>Staff Gender</th>
+                    <th>Staff Phone Number</th>
+                    <th>Staff Job Desc</th>
+                    <th>Last Update</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-gray-600 text-center">
-                <tr class="row border border-black">
-                    <td class="font-medium">1</td>
-                    <td class="font-medium text-xl">Snickerdoodle</td>
-                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Snickerdoodles.jpg') }}" alt="Snickerdoodles" class="rounded-md"></td>
-                    <td class="pl-8">
-                        <ul>
-                            <li>1 ½ cups white sugar</li>
-                            <li>1 cup softened butter</li>
-                            <li>2 eggs</li>
-                            <li>2 ¾ cups all-purpose flour</li>
-                            <li>2 teaspoons cream of tartar</li>
-                            <li>1 teaspoon baking soda</li>
-                            <li>¼ teaspoon salt</li>
-                        </ul>
-                    </td>
-                    <td class="text-lg font-medium">24 Qty</td>
+                <tr class="row border border-black font-medium text-lg">
+                    <td>1</td>
+                    <td>Mark Zuckeberg</td>
+                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Men1.jpg') }}" alt="Men 1" class="rounded-md"></td>
+                    <td>staff001@staff.com</td>
+                    <td>Male</td>
+                    <td>081234567890</td>
+                    <td>Courrier</td>
+                    <td>12 January 2022</td>
                     <td><a class="button touch edit edit-btn" href="#"></a>
                         <a class="button touch delete" href="#"></a></td>
                 </tr>
-                <tr class="row border border-black">
-                    <td class="font-medium">2</td>
-                    <td class="font-medium text-xl">Chocolate Chip Cookies</td>
-                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Chocolate_Chip_Cookies.jpg') }}" alt="Chocolate Chip Cookies" class="rounded-md"></td>
-                    <td class="pl-8">
-                        <ul>
-                            <li>1 ½ cups white sugar</li>
-                            <li>1 cup softened butter</li>
-                            <li>2 eggs</li>
-                            <li>2 ¾ cups all-purpose flour</li>
-                            <li>2 teaspoons cream of tartar</li>
-                            <li>1 teaspoon baking soda</li>
-                            <li>¼ teaspoon salt</li>
-                        </ul>
-                    </td>
-                    <td class="text-lg font-medium">24 Qty</td>
+                <tr class="row border border-black font-medium text-lg">
+                    <td>2</td>
+                    <td>Elon Musk</td>
+                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Men2.jpg') }}" alt="Men 2" class="rounded-md"></td>
+                    <td>staff002@staff.com</td>
+                    <td>Male</td>
+                    <td>081234567890</td>
+                    <td>Chef</td>
+                    <td>12 January 2022</td>
                     <td><a class="button touch edit edit-btn" href="#"></a>
                         <a class="button touch delete" href="#"></a></td>
                 </tr>
-                <tr class="row border border-black">
-                    <td class="font-medium">3</td>
-                    <td class="font-medium text-xl">Oatmeal Raisin Cookies</td>
-                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Oatmeal_Raisin_Cookies.jpg') }}" alt="Oatmeal Raisin Cookies" class="rounded-md"></td>
-                    <td class="pl-8">
-                        <ul>
-                            <li>1 ½ cups white sugar</li>
-                            <li>1 cup softened butter</li>
-                            <li>2 eggs</li>
-                            <li>2 ¾ cups all-purpose flour</li>
-                            <li>2 teaspoons cream of tartar</li>
-                            <li>1 teaspoon baking soda</li>
-                            <li>¼ teaspoon salt</li>
-                        </ul>
-                    </td>
-                    <td class="text-lg font-medium">24 Qty</td>
+                <tr class="row border border-black font-medium text-lg">
+                    <td>3</td>
+                    <td>Jeff Bezos</td>
+                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Men3.jpeg') }}" alt="Men 3" class="rounded-md"></td>
+                    <td>staff003@staff.com</td>
+                    <td>Male</td>
+                    <td>081234567890</td>
+                    <td>Courrier</td>
+                    <td>12 January 2022</td>
                     <td><a class="button touch edit edit-btn" href="#"></a>
                         <a class="button touch delete" href="#"></a></td>
                 </tr>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransactionsTable extends Migration
+class CreateTransactionDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,20 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('transaction_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pembeliID');
-            $table->unsignedBigInteger('staffID');
+            $table->unsignedBigInteger('transaksiID');
+            $table->unsignedBigInteger('barangID');
+            $table->bigInteger('jumlahBarang');
             $table->bigInteger('totalHarga');
-            $table->string('status');
+            $table->string('additionalNotes');
             $table->timestamps();
         });
 
-        Schema::table('transactions', function (Blueprint $table){
-            $table->foreign('pembeliID')->references('id')->on('users')
+        Schema::table('transaction_details', function (Blueprint $table){
+            $table->foreign('transaksiID')->references('id')->on('transactions')
                     ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('staffID')->references('id')->on('staff')
+            $table->foreign('barangID')->references('id')->on('menus')
                     ->onUpdate('cascade')->onDelete('cascade');
         });
     }
@@ -37,6 +38,6 @@ class CreateTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('transaction_details');
     }
 }

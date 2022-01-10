@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Staff extends Authenticatable
+class Menu extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -18,26 +18,15 @@ class Staff extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nama',
-        'email',
-        'password',
-        'gender',
-        'phone',
-        'jobDesc',
+        'namaMenu',
+        'deskripsiMenu',
+        'jumlahBarang',
+        'hargaJual',
+        'hargaBeli',
         'linkGambar'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'remember_token',
-    ];
-
-    public function staffID(){
-        return $this->belongsTo(Transaction::class,'staffID','id');
+    public function barangID(){
+        return $this->belongsTo(TransactionDetail::class,'id','barangID');
     }
-
 }

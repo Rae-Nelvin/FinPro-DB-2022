@@ -13,7 +13,7 @@ class StaffController extends Controller
     function check(Request $request){
         //Validate Inputs
         $request->validate([
-            'email' => 'required|email|exists:staff,email',
+            'email' => 'required|email|unique:staff,email',
             'password' => 'required|min:5|max:30'
         ],[
             'email.exists' => 'You are not eligible to enter the next stage'

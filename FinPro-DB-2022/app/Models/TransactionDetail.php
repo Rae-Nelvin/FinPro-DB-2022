@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Transaction as ModelsTransaction;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Transaction extends Authenticatable
+class TransactionDetail extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -19,21 +18,18 @@ class Transaction extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'pembeliID',
-        'staffID',
+        'transaksiID',
+        'barangID',
+        'jumlahBarang',
         'totalHarga',
-        'status',
+        'additionalNotes'
     ];
 
-    public function pembeliID(){
-        return $this->hasOne(User::class,'id','pembeliID');
-    }
-
-    public function staffID(){
-        return $this->hasOne(Staff::class,'id','staffID');
-    }
-
     public function transaksiID(){
-        return $this->belongsTo(TransactionDetail::class,'transactionID','id');
+        return $this->hasOne(Transaction::class,'id','transaksiID');
+    }
+
+    public function barangID(){
+        return $this->hasOne(Menu::class,'id','barangID');
     }
 }
