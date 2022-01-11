@@ -48,7 +48,7 @@
     
     <div class="container mx-auto mt-12 pl-14 pb-20">
         @if(Session::get('Success'))
-            <div class="bg-green-600 text-green-100">
+            <div class="bg-green-600 text-green-100 p-2 text-lg font-medium rounded-md mb-4">
                 {{ Session::get('Success') }}
             </div>
         @endif
@@ -75,42 +75,20 @@
                 </tr>
             </thead>
             <tbody class="bg-gray-600 text-center">
+                @foreach($staff as $staffs)
                 <tr class="row border border-black font-medium text-lg">
-                    <td>1</td>
-                    <td>Mark Zuckeberg</td>
-                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Men1.jpg') }}" alt="Men 1" class="rounded-md"></td>
-                    <td>staff001@staff.com</td>
-                    <td>Male</td>
-                    <td>081234567890</td>
-                    <td>Courrier</td>
-                    <td>12 January 2022</td>
-                    <td><a class="button touch edit edit-btn" href="#"></a>
-                        <a class="button touch delete" href="#"></a></td>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $staffs->nama }}</td>
+                    <td class="w-1/5 p-4"><img src="/assets/staff/{{ $staffs->linkGambar }}" alt="{{ $staffs->linkGambar }}" class="rounded-md"></td>
+                    <td>{{ $staffs->email }}</td>
+                    <td>{{ $staffs->gender }}</td>
+                    <td>{{ $staffs->phone }}</td>
+                    <td>{{ $staffs->jobDesc}}</td>
+                    <td>{{ \Carbon\Carbon::parse($staffs['updated_at'])->format('j F, Y') }}</td>
+                    <td><a class="button touch edit edit-btn" href="{{ route('admin.editstaff',$staffs->id) }}"></a>
+                        <a class="button touch delete" href="{{ route('admin.delete_staff',$staffs->id) }}"></a></td>
                 </tr>
-                <tr class="row border border-black font-medium text-lg">
-                    <td>2</td>
-                    <td>Elon Musk</td>
-                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Men2.jpg') }}" alt="Men 2" class="rounded-md"></td>
-                    <td>staff002@staff.com</td>
-                    <td>Male</td>
-                    <td>081234567890</td>
-                    <td>Chef</td>
-                    <td>12 January 2022</td>
-                    <td><a class="button touch edit edit-btn" href="#"></a>
-                        <a class="button touch delete" href="#"></a></td>
-                </tr>
-                <tr class="row border border-black font-medium text-lg">
-                    <td>3</td>
-                    <td>Jeff Bezos</td>
-                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Men3.jpeg') }}" alt="Men 3" class="rounded-md"></td>
-                    <td>staff003@staff.com</td>
-                    <td>Male</td>
-                    <td>081234567890</td>
-                    <td>Courrier</td>
-                    <td>12 January 2022</td>
-                    <td><a class="button touch edit edit-btn" href="#"></a>
-                        <a class="button touch delete" href="#"></a></td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

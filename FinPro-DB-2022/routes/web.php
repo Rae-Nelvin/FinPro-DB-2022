@@ -48,10 +48,13 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::view('/menu','dashboard.admin.menu')->name('menu');
         Route::view('/upload/menu','dashboard.admin.uploads.menu')->name('uploadmenu');
         Route::view('/transaction','dashboard.admin.transaction')->name('transaction');
-        Route::view('/staff','dashboard.admin.staff')->name('staff');
+        Route::get('/staff',[AdminController::class,'staff'])->name('staff');
         Route::view('/upload/staff','dashboard.admin.uploads.staff')->name('uploadstaff');
-        Route::post('/uploadmenu',[AdminController::class,'uploadmenu'])->name('uploadmenu');
-        Route::post('/uploadstaff',[AdminController::class,'uploadstaff'])->name('uploadstaff');
+        Route::get('/edit/staff/{id}',[AdminController::class,'editstaff'])->name('editstaff');
+        Route::post('/uploadmenu',[AdminController::class,'uploadmenu'])->name('upload_menu');
+        Route::post('/uploadstaff',[AdminController::class,'upload_staff'])->name('upload_staff');
+        Route::post('/edit_staff',[AdminController::class,'edit_staff'])->name('edit_staff');
+        Route::get('/delete/staff/{id}',[AdminController::class,'delete_staff'])->name('delete_staff');
         Route::post('/logout',[StaffController::class,'logout'])->name('logout');
     });
 });

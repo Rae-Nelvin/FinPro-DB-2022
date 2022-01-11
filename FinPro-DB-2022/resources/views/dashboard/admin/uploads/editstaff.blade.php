@@ -56,11 +56,13 @@
             <h2 class="font-medium text-3xl">Upload New Staff</h2>
         </div>
         <div class="flex justify-center my-8">
-            <form action="{{ route('admin.upload_staff') }}" class="w-1/2 bg-gray-800 rounded-md p-8 space-y-8 text-md" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.edit_staff') }}" class="w-1/2 bg-gray-800 rounded-md p-8 space-y-8 text-md" method="post" enctype="multipart/form-data">
                 @csrf
+                @foreach($staff as $staffs)
+                <input type="hidden" name="id" value="{{ $staffs->id }}">
                 <div class="space-y-4 text-lg">
                     <label for="Staff name">Staff's Name</label><br>
-                    <input type="text" name="name" placeholder="Input New Staff's Name Here" class="w-full h-12 p-4 rounded-md text-black" value="{{ old('name') }}">
+                    <input type="text" name="name" placeholder="{{ $staffs->nama }}" class="w-full h-12 p-4 rounded-md text-black">
                     <span class="text-red-600">@error('name'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4 text-lg">
@@ -71,17 +73,17 @@
                 </div>
                 <div class="space-y-4 text-lg">
                     <label for="Staff Email">Staff's Email</label><br>
-                    <input type="text" name="email" placeholder="Input New Staff's Email Here" class="w-full h-12 p-4 rounded-md text-black" value="{{ old('email') }}">
+                    <input type="text" name="email" placeholder="{{ $staffs->email }}" class="w-full h-12 p-4 rounded-md text-black">
                     <span class="text-red-600">@error('email'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4 text-lg">
                     <label for="Staff Password">Staff's Password</label><br>
-                    <input type="password" name="password" placeholder="Input New Staff's Password Here" class="w-full h-12 p-4 rounded-md text-black" value="{{ old('password') }}">
+                    <input type="password" name="password" placeholder="Input New Staff's Password Here" class="w-full h-12 p-4 rounded-md text-black">
                     <span class="text-red-600">@error('password'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4 text-lg">
                     <label for="Staff Confirm Password">Staff's Confirm Password</label><br>
-                    <input type="password" name="password_confirmation" placeholder="Input New Staff's Confirm Password Here" class="w-full h-12 p-4 rounded-md text-black" value="{{ old('password') }}">
+                    <input type="password" name="password_confirmation" placeholder="Input New Staff's Confirm Password Here" class="w-full h-12 p-4 rounded-md text-black">
                     <span class="text-red-600">@error('password'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-6 text-lg">
@@ -94,13 +96,13 @@
                 </div>
                 <div class="space-y-4 text-lg">
                     <label for="Staff Phone Number">Staff's Phone Number</label><br>
-                    <input type="tel" name="pnumber" placeholder="Input New Staff's Phone Number Here" class="w-full h-12 p-4 rounded-md text-black" value="{{ old('pnumber') }}">
+                    <input type="tel" name="pnumber" placeholder="{{ $staffs->phone }}" class="w-full h-12 p-4 rounded-md text-black">
                     <span class="text-red-600">@error('pnumber'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4 text-lg">
                     <label for="Staff Job Desc">Staff's Job Desc</label><br>
-                    <select name="jobDesc" class="w-full h-12 px-2 rounded-md text-black" value="{{ old('jobDesc') }}">
-                        <option value="Chef" selected>Chef</option>
+                    <select name="jobDesc" class="w-full h-12 px-2 rounded-md text-black">
+                        <option value="Chef">Chef</option>
                         <option value="Courrier">Courrier</option>
                         <option value="Customer_Service">Customer Service</option>
                     <span class="text-red-600">@error('jobDesc'){{ $message }} @enderror</span>
@@ -109,6 +111,7 @@
                 <div class="space-y-4 text-lg justify-center flex">
                     <button class="bg-gray-700 text-2xl mx-auto w-auto py-2 px-4 rounded-md mb-4 hover:bg-green-400 transition-all hover:scale-110 transform transition-all cursor-pointer" value="submit">Submit</button>
                 </div>
+                @endforeach
             </form>
         </div>
     </div>

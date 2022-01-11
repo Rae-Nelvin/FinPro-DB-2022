@@ -33,7 +33,7 @@ class AdminSeeder extends Seeder
         ]);
 
         DB::table('staff')->insert([
-            'nama' => 'Ian Putra Ismaya',
+            'nama' => 'Gede Dyava Savitra',
             'email' => 'admin003@admin.com',
             'jobDesc' => 'Admin',
             'password' => Hash::make('admin003'),
