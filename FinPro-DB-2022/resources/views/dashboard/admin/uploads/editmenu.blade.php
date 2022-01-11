@@ -68,42 +68,45 @@
             <h2 class="font-medium text-3xl">Upload New Menu</h2>
         </div>
         <div class="flex justify-center my-8">
-            <form action="{{ route('admin.upload_menu') }}" class="w-1/2 bg-gray-800 rounded-md p-8 space-y-8 text-md" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.edit_menu') }}" class="w-1/2 bg-gray-800 rounded-md p-8 space-y-8 text-md" method="post" enctype="multipart/form-data">
                 @csrf
+                @foreach( $menu as $menus)
+                <input type="hidden" name="id" value="{{ $menus->id }}">
                 <div class="space-y-4 text-xl">
                     <label for="Menu Name">Menu's Name</label><br>
-                    <input type="text" name="name" placeholder="Input New Menu's Name Here" class="w-full h-14 p-4 rounded-md text-black" value="{{ old('name') }}">
+                    <input type="text" name="name" placeholder="{{ $menus->namaMenu }}" class="w-full h-14 p-4 rounded-md text-black">
                     <span class="text-red-600">@error('name'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4 text-xl">
                     <label for="Picture">Menu's Picture</label><br>
-                    <input type="file" name="picture" value="{{ old('picture') }}" class="custom-file-input" id="inputGroupFile02" onchange="loadFile(event)"><br>
+                    <input type="file" name="picture" class="custom-file-input" id="inputGroupFile02" onchange="loadFile(event)"><br>
                     <img id="output" class="w-3/4 p-2"/><br>
                     <span class="text-red-600">@error('picture'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4">
                     <label for="Description">Menu's Description</label><br>
-                    <textarea name="description" placeholder="Input New Menu's Description/Recipee Here" class="w-full h-auto p-4 rounded-md text-black konten text-md" value="{{ old('description') }}"></textarea>
+                    <textarea name="description" placeholder="{{ $menus->deskripsiMenu }}" class="w-full h-auto p-4 rounded-md text-black konten text-md"></textarea>
                     <span class="text-red-600 text-xl">@error('description'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4 text-xl">
                     <label for="Harga Beli">Menu's Harga Beli</label><br>
-                    <input type="number" name="hargaBeli" min="1" class="w-full h-10 p-4 rounded-md text-black" value="{{ old('hargaBeli') }}" placeholder="Rp">
+                    <input type="number" name="hargaBeli" min="1" class="w-full h-10 p-4 rounded-md text-black" placeholder="Rp. {{ $menus->hargaJual }}">
                     <span class="text-red-600">@error('hargaBeli'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4 text-xl">
                     <label for="Harga Jual">Menu's Harga Jual</label><br>
-                    <input type="number" name="hargaJual" min="1" class="w-full h-10 p-4 rounded-md text-black" value="{{ old('hargaJual') }}" placeholder="Rp">
+                    <input type="number" name="hargaJual" min="1" class="w-full h-10 p-4 rounded-md text-black" placeholder="Rp. {{ $menus->hargaBeli }}">
                     <span class="text-red-600">@error('hargaJual'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4 text-xl">
                     <label for="Quantity">Menu's Quantity</label><br>
-                    <input type="number" name="quantity" min="1" max="100" class="w-full h-10 p-4 rounded-md text-black" value="{{ old('quantity') }}">
+                    <input type="number" name="quantity" min="1" max="100" class="w-full h-10 p-4 rounded-md text-black" placeholder="{{ $menus->jumlahBarang }} Qty">
                     <span class="text-red-600">@error('quantity'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4 text-xl justify-center flex">
                     <button class="bg-gray-700 text-2xl mx-auto w-auto py-2 px-4 rounded-md mb-4 hover:bg-green-400 transition-all hover:scale-110 transform transition-all cursor-pointer" value="submit">Submit</button>
                 </div>
+                @endforeach
             </form>
         </div>
     </div>

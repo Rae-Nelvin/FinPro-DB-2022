@@ -46,7 +46,12 @@
         </div>
     </nav>
     
-    <div class="container mx-auto mt-12 pl-14">
+    <div class="container mx-auto mt-12 pl-14 pb-20">
+        @if(Session::get('Success'))
+            <div class="bg-green-600 text-green-100 p-2 text-lg font-medium rounded-md mb-4">
+                {{ Session::get('Success') }}
+            </div>
+        @endif
         <div class="flex justify-content-end align-content-end">
             <div class="bg-gray-800 mx-auto w-auto py-2 px-4 rounded-md mb-4 hover:bg-green-400 transition-all hover:scale-110 transform transition-all cursor-pointer">
                 <a class="text-white font-medium text-2xl" href="{{ route('admin.uploadmenu') }}">Add New</a>
@@ -61,69 +66,27 @@
                     <th class="py-4 px-2">No.</th>
                     <th>Menu</th>
                     <th>Images</th>
-                    <th>Recipes</th>
+                    <th>Description</th>
+                    <th>Harga Jual</th>
+                    <th>Harga Beli</th>
                     <th>Amounts</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-gray-600 text-center">
+            @foreach($menu as $menus)
                 <tr class="row border border-black">
-                    <td class="font-medium">1</td>
-                    <td class="font-medium text-xl">Snickerdoodle</td>
-                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Snickerdoodles.jpg') }}" alt="Snickerdoodles" class="rounded-md"></td>
-                    <td class="pl-8">
-                        <ul>
-                            <li>1 ½ cups white sugar</li>
-                            <li>1 cup softened butter</li>
-                            <li>2 eggs</li>
-                            <li>2 ¾ cups all-purpose flour</li>
-                            <li>2 teaspoons cream of tartar</li>
-                            <li>1 teaspoon baking soda</li>
-                            <li>¼ teaspoon salt</li>
-                        </ul>
-                    </td>
-                    <td class="text-lg font-medium">24 Qty</td>
-                    <td><a class="button touch edit edit-btn" href="#"></a>
-                        <a class="button touch delete" href="#"></a></td>
+                    <td class="font-medium">{{ $loop->iteration }}</td>
+                    <td class="font-medium text-xl">{{ $menus->namaMenu }}</td>
+                    <td class="w-1/5 p-4"><img src="/assets/menus/{{ $menus->linkGambar }}" alt="{{ $menus->linkGambar }}" class="rounded-md"></td>
+                    <td class="pl-8">{!! $menus->deskripsiMenu !!}</td>
+                    <td class="text-lg font-medium">Rp. {{ $menus->hargaJual }}</td>
+                    <td class="text-lg font-medium">Rp. {{ $menus->hargaBeli }}</td>
+                    <td class="text-lg font-medium">{{ $menus->jumlahBarang }} Qty</td>
+                    <td><a class="button touch edit edit-btn" href="{{ route('admin.editmenu',$menus->id) }}"></a>
+                        <a class="button touch delete" href="{{ route('admin.delete_menu',$menus->id) }}"></a></td>
                 </tr>
-                <tr class="row border border-black">
-                    <td class="font-medium">2</td>
-                    <td class="font-medium text-xl">Chocolate Chip Cookies</td>
-                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Chocolate_Chip_Cookies.jpg') }}" alt="Chocolate Chip Cookies" class="rounded-md"></td>
-                    <td class="pl-8">
-                        <ul>
-                            <li>1 ½ cups white sugar</li>
-                            <li>1 cup softened butter</li>
-                            <li>2 eggs</li>
-                            <li>2 ¾ cups all-purpose flour</li>
-                            <li>2 teaspoons cream of tartar</li>
-                            <li>1 teaspoon baking soda</li>
-                            <li>¼ teaspoon salt</li>
-                        </ul>
-                    </td>
-                    <td class="text-lg font-medium">24 Qty</td>
-                    <td><a class="button touch edit edit-btn" href="#"></a>
-                        <a class="button touch delete" href="#"></a></td>
-                </tr>
-                <tr class="row border border-black">
-                    <td class="font-medium">3</td>
-                    <td class="font-medium text-xl">Oatmeal Raisin Cookies</td>
-                    <td class="w-1/5 p-4"><img src="{{ asset('assets/img/Oatmeal_Raisin_Cookies.jpg') }}" alt="Oatmeal Raisin Cookies" class="rounded-md"></td>
-                    <td class="pl-8">
-                        <ul>
-                            <li>1 ½ cups white sugar</li>
-                            <li>1 cup softened butter</li>
-                            <li>2 eggs</li>
-                            <li>2 ¾ cups all-purpose flour</li>
-                            <li>2 teaspoons cream of tartar</li>
-                            <li>1 teaspoon baking soda</li>
-                            <li>¼ teaspoon salt</li>
-                        </ul>
-                    </td>
-                    <td class="text-lg font-medium">24 Qty</td>
-                    <td><a class="button touch edit edit-btn" href="#"></a>
-                        <a class="button touch delete" href="#"></a></td>
-                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 
 use App\Models\Staff;
@@ -12,16 +13,73 @@ use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
 
-    function uploadmenu(Request $request){
+    function menu(){
+        $menu = Menu::get();
+        return view('dashboard.admin.menu', ['menu'=>$menu]);
+    }
+
+    function upload_menu(Request $request){
         // Validating Requests
         $request->validate([
-            'title' => 'required',
+            'name' => 'required',
             'picture' => 'required',
-            'recipee' => 'required',
-            'quantity' => 'required|min:1|max:1000'
+            'description' => 'required',
+            'quantity' => 'required|min:1|max:1000',
+            'hargaJual' => 'required|min:1',
+            'hargaBeli' => 'required|min:1'
         ]);
 
-        dd($request->recipee);
+        $imageName = $request->name.'-'.$request->picture->getClientOriginalName();
+        $request->picture->move(public_path('assets/menus/'), $imageName);
+
+        Menu::create([
+            'namaMenu' => $request->name,
+            'deskripsiMenu' => $request->description,
+            'jumlahBarang' => $request->quantity,
+            'hargaJual' => $request->hargaJual,
+            'hargaBeli' => $request->hargaBeli,
+            'linkGambar' => $imageName
+        ]);
+
+        return redirect('admin/menu')->with('Success','Your New Menu has been Uploaded');
+    }
+
+    function editmenu($id){
+        $menu = Menu::where('id','=',$id)->get();
+        return view('dashboard.admin.uploads.editmenu',['menu'=>$menu]);
+    }
+
+    function edit_menu(Request $request){
+        // Validating Requests
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'picture' => 'required',
+            'quantity' => 'required|min:1|max:1000',
+            'hargaJual' => 'required|min:1',
+            'hargaBeli' => 'required|min:1'
+        ]);
+
+        $imageName = $request->name.'-'.$request->picture->getClientOriginalName();
+        $request->picture->move(public_path('assets/menus/'), $imageName);
+
+        Menu::where('id',$request->id)
+            ->update([
+                'namaMenu' => $request->name,
+                'deskripsiMenu' => $request->description,
+                'jumlahBarang' => $request->quantity,
+                'hargaJual' => $request->hargaJual,
+                'hargaBeli' => $request->hargaBeli,
+                'linkGambar' => $imageName
+            ]);
+
+        return redirect('admin/menu')->with('Success','Your Staff has been Edited');
+    }
+
+    function delete_menu($id){
+        $menu = Menu::where('id',$id)->get();
+        $menu->each->delete();
+        return redirect('admin/menu')->with('Success', 'Your Menu has been Deleted');
     }
 
     function staff(){
