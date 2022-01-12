@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Menu;
 
 class UserController extends Controller
 {
@@ -25,7 +26,10 @@ class UserController extends Controller
         $save = $user->save();
 
         if($save) {
-            return redirect()->route('user.home');
+            $creds = $request->only('email','password');
+            if(Auth::guard('web')->attempt($creds)){
+                return redirect()->route('user.home');
+            }
         }else{
             return redirect()->back()->with('Fail','Something went wrong, failed to register');
         }
@@ -46,6 +50,11 @@ class UserController extends Controller
         }else{
             return redirect()->route('user.login')->with('Fail','Incorrect credentials');
         }
+    }
+
+    function home(){
+        $menu = Menu::get();
+        return view('dashboard.user.home',['menu'=>$menu]);
     }
 
     function logout(){

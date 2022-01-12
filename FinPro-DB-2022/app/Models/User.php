@@ -45,4 +45,8 @@ class User extends Authenticatable
     public function pembeliID(){
         return $this->belongsTo(Transaction::class,'pembeliID','id');
     }
+
+    public function pembeliID_delivery(){
+        return $this->belongsTo(Delivery::class,'pembeliID','id');
+    }
 }

@@ -40,4 +40,8 @@ class Staff extends Authenticatable
         return $this->belongsTo(Transaction::class,'staffID','id');
     }
 
+    public function staffID_delivery(){
+        return $this->belongsTo(Delivery::class,'staffID','id');
+    }
+
 }

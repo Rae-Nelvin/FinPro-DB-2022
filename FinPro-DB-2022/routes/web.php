@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Staff\StaffController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +34,12 @@ Route::prefix('user')->name('user.')->group(function(){
     });
 
     Route::middleware(['auth:web','PreventBackHistory'])->group(function(){
-        Route::view('/home','dashboard.user.home')->name('home');
-        Route::post('/logout',[UserController::class,'logout'])->name('logout');
+        // Route::view('/home','dashboard.user.home')->name('home');
+        Route::get('/home',[UserController::class,'home'])->name('home');
+        Route::get('/addtocart/{id}',[CartController::class,'addtocart'])->name('addtocart');
+        Route::get('/remove_cartitem/{id}',[CartController::class,'remove_cartitem'])->name('remove_cartitem');
+        Route::get('/cart',[CartController::class,'cart'])->name('cart');
+        Route::get('/logout',[UserController::class,'logout'])->name('logout');
     });
 });
 
@@ -58,7 +63,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/edit_menu',[AdminController::class,'edit_menu'])->name('edit_menu');
         Route::get('/delete/menu/{id}',[AdminController::class,'delete_menu'])->name('delete_menu');
         Route::get('/delete/staff/{id}',[AdminController::class,'delete_staff'])->name('delete_staff');
-        Route::post('/logout',[StaffController::class,'logout'])->name('logout');
+        Route::get('/logout',[StaffController::class,'logout'])->name('logout');
     });
 });
 
@@ -70,6 +75,6 @@ Route::prefix('staff')->name('staff.')->group(function(){
 
     Route::middleware(['auth:staff','PreventBackHistory'])->group(function(){
         Route::view('/home','dashboard.staff.home')->name('home');
-        Route::post('/logout',[StaffController::class,'logout'])->name('logout');
+        Route::get('/logout',[StaffController::class,'logout'])->name('logout');
     });
 });

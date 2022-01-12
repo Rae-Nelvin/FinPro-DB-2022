@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard | Home</title>
+    <title>User Dashboard | Cart</title>
     <link rel="stylesheet" href="{{ asset('bootstrap.min.css') }}">
 </head>
 <body>
@@ -37,7 +37,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3" style="margin-top: 45px">
-                <h4>Product List</h4><br>
+                <h4>Cart List</h4><br>
                 <table class="table table-striped table-inverse table-responsive">
                     <thead class="thead-inverse">
                         <tr>
@@ -49,17 +49,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach( $menu as $menus )
+                        @foreach( $cart as $carts )
                         <tr>
-                            <td>{{ $menus->namaMenu }}</td>
-                            <td><img src="/assets/menus/{{ $menus->linkGambar }}" alt="{{ $menus->linkGambar }}" style="width:100%"></td>
-                            <td>{{ $menus->jumlahBarang }}</td>
-                            <td>Rp. {{ $menus->hargaJual }}</td>
-                            <td><a href="{{ route('user.addtocart',$menus->id) }}"><button class="btn btn-success">Add to cart</button></a></td>
+                            <td>{{ $carts->namaMenu }}</td>
+                            <td><img src="/assets/carts/{{ $carts->linkGambar }}" alt="{{ $carts->linkGambar }}" style="width:100%"></td>
+                            <td>{{ $carts->jumlahBarang }}</td>
+                            <td>Rp. {{ $carts->hargaJual }}</td>
+                            <td><a href="{{ route('user.remove_cartitem',$carts->tdid) }}"><button class="btn btn-danger">Remove</button></a></td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                    <div class="center">
+                        <h4>Total harga : {{ $carts->totalHarga }}</h4>
+                        <a href="#"><button class="btn btn-success">Checkout</button></a>
+                    </div>
             </div>
         </div>
     </div>

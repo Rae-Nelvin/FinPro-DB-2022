@@ -14,7 +14,7 @@
             <div class="col-md-4 offset-md-4" style="margin-top: 45px;">
                 <h4>User Register</h4><hr>
                 <form action="{{ route('user.create') }}" method="post" autocomplete="off">
-                    @if (session::get('Fail'))
+                    @if (Session::get('Fail'))
                     <div class="alert alert-danger">
                         {{ Session::get('Fail') }}
                     </div>
@@ -44,7 +44,7 @@
                         <button type="submit" class="btn btn-primary">Register</button>
                     </div>
                     <br>
-                    <a href="{{ route('user.login') }}">I already have an account</a>
+                    <a href="{{ route('login') }}">I already have an account</a>
                 </form>
             </div>
         </div>
