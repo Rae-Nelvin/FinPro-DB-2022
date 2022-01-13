@@ -16,6 +16,7 @@ class CreateMenusTable extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('namaMenu');
+            $table->string('categoryMenu');
             $table->string('deskripsiMenu');
             $table->bigInteger('jumlahBarang');
             $table->bigInteger('hargaJual');

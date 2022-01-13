@@ -19,7 +19,7 @@ use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('/');
 
 Auth::routes();
 
@@ -34,12 +34,13 @@ Route::prefix('user')->name('user.')->group(function(){
     });
 
     Route::middleware(['auth:web','PreventBackHistory'])->group(function(){
-        // Route::view('/home','dashboard.user.home')->name('home');
         Route::get('/home',[UserController::class,'home'])->name('home');
-        Route::get('/addtocart/{id}',[CartController::class,'addtocart'])->name('addtocart');
+        Route::get('/addtocart',[CartController::class,'addtocart'])->name('addtocart');
+        Route::get('/portofolio/{id}',[userController::class,'portofolio'])->name('portofolio');
         Route::get('/remove_cartitem/{id}',[CartController::class,'remove_cartitem'])->name('remove_cartitem');
         Route::get('/cart',[CartController::class,'cart'])->name('cart');
         Route::get('/logout',[UserController::class,'logout'])->name('logout');
+        Route::view('/transaction','dashboard.user.transaction')->name('transaction');
     });
 });
 

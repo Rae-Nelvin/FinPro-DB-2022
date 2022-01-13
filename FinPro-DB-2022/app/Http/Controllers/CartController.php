@@ -17,13 +17,21 @@ class CartController extends Controller
                     ->join('transaction_details','transactions.id','=','transaction_details.transaksiID')
                     ->join('menus','menus.id','=','transaction_details.barangID')
                     ->where('pembeliID','=',Auth::user()->id)
-                    ->select('menus.namaMenu as namaMenu', 'menus.linkGambar as linkGambar', 'transaction_details.jumlahBarang as jumlahBarang', 'menus.hargaJual as hargaJual', 'transaction_details.id as tdid', 'transactions.totalHarga as totalHarga')
+                    ->select('menus.namaMenu as namaMenu', 'menus.linkGambar as linkGambar', 'transaction_details.jumlahBarang as jumlahBarang', 'menus.hargaJual as hargaJual', 'transaction_details.id as tdid', 'transactions.totalHarga as totalHarga', 'transaction_details.totalHarga as totalHarga2')
                     ->get();
-        return view('dashboard.user.cart',['cart'=>$cart]);
+        $totalHarga = Transaction::where('pembeliID','=',Auth::user()->id)->first();
+        return view('dashboard.user.cart',['cart'=>$cart,'totalHarga'=>$totalHarga]);
     }
 
-    function addtocart($id){
+    function addtocart(Request $request){
+        $id = $request->id;
         $menu = Menu::where('id',$id)->first();
+        // Validating Requests
+        $request->validate([
+            'jumlahBarang' => 'required|min:1|max:$menu->jumlahBarang'
+        ]);
+        $jumlahBarang = $request->quantity;
+        $additionalNotes = $request->additionalNotes;
         $staff = Staff::count();
         $rand = rand(1,$staff);
         $staff = Staff::where('id','=',$rand)->first();
@@ -44,9 +52,9 @@ class CartController extends Controller
             TransactionDetail::create([
                 'transaksiID' => $transaction->id,
                 'barangID' => $menu->id,
-                'jumlahBarang' => 1,
+                'jumlahBarang' => $jumlahBarang,
                 'totalHarga' => $menu->hargaJual,
-                'additionalNotes' => 's',
+                'additionalNotes' => $additionalNotes,
             ]);
     
         }else if($check){
@@ -61,13 +69,13 @@ class CartController extends Controller
                 $menu = Menu::where('id','=',$transactionDetail->barangID)->first();
                 TransactionDetail::where('id',$transactionDetail->id)
                     ->update([
-                        'jumlahBarang' => 3,
-                        'totalHarga' => 3 * $menu->hargaJual
+                        'jumlahBarang' => $jumlahBarang,
+                        'totalHarga' => $jumlahBarang * $menu->hargaJual
                     ]);
 
                 Transaction::where('id',$transactionDetail->transaksiID)
                     ->update([
-                        'totalHarga' => 3 * $menu->hargaJual
+                        'totalHarga' => $jumlahBarang * $menu->hargaJual
                     ]);
 
             } // If new data doesn't match with previous data
@@ -77,9 +85,9 @@ class CartController extends Controller
                 TransactionDetail::create([
                     'transaksiID' => $transactionDetail->transaksiID,
                     'barangID' => $menu->id,
-                    'jumlahBarang' => 1,
+                    'jumlahBarang' => $jumlahBarang,
                     'totalHarga' => $menu->hargaJual,
-                    'additionalNotes' => 'a',
+                    'additionalNotes' => $additionalNotes,
                 ]);
     
                 Transaction::where('id',$transactionDetail->transaksiID)

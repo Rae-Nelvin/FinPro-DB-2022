@@ -57,6 +57,11 @@ class UserController extends Controller
         return view('dashboard.user.home',['menu'=>$menu]);
     }
 
+    function portofolio($id){
+        $menu = Menu::where('id',$id)->first();
+        return view('dashboard.user.portofolio',['menu'=>$menu]);
+    }
+
     function logout(){
         Auth::guard('web')->logout();
         return redirect('/');
