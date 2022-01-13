@@ -28,7 +28,6 @@ class CartController extends Controller
         $rand = rand(1,$staff);
         $staff = Staff::where('id','=',$rand)->first();
         $check = Transaction::where('status','=','unpaid')->where('pembeliID','=',Auth::user()->id)->first();
-        $totalHarga = 1 * $menu->hargaJual;
 
         // If there's no datas in Transaction Detail or brand new transaction
         if(!$check){
@@ -36,7 +35,7 @@ class CartController extends Controller
             Transaction::create([
                 'pembeliID' => Auth::user()->id,
                 'staffID' => $staff->id,
-                'totalHarga' => $totalHarga,
+                'totalHarga' => $menu->hargaJual,
                 'status' => 'unpaid',
             ]);
 
@@ -46,43 +45,46 @@ class CartController extends Controller
                 'transaksiID' => $transaction->id,
                 'barangID' => $menu->id,
                 'jumlahBarang' => 1,
-                'totalHarga' => $totalHarga,
+                'totalHarga' => $menu->hargaJual,
                 'additionalNotes' => 's',
             ]);
     
-        }else if ($check){
+        }else if($check){
 
-            $check = TransactionDetail::where('barangID',$id)->first();
+            $transaction = Transaction::where('status','=','unpaid')->where('pembeliID','=',Auth::user()->id)->first();
+            $transactionDetail = TransactionDetail::where('transaksiID','=',$transaction->id)->first();
+            
+            $check = TransactionDetail::where('transaksiID','=',$transaction->id)->where('barangID','=',$id)->first();
 
             // If new data match with previous data
-            if($check){
-                TransactionDetail::where('id',$check->id)
+            if($transaction && $check){
+                $menu = Menu::where('id','=',$transactionDetail->barangID)->first();
+                TransactionDetail::where('id',$transactionDetail->id)
                     ->update([
-                        'jumlahBarang' => 2,
-                        'totalHarga' => 2 * $totalHarga
+                        'jumlahBarang' => 3,
+                        'totalHarga' => 3 * $menu->hargaJual
                     ]);
 
-                Transaction::where('id',$check->transaksiID)
+                Transaction::where('id',$transactionDetail->transaksiID)
                     ->update([
-                        'totalHarga' => 2 * $totalHarga
+                        'totalHarga' => 3 * $menu->hargaJual
                     ]);
 
             } // If new data doesn't match with previous data
-            else{
-
-                $check = TransactionDetail::where('barangID',$id)->first();
+            else if($transaction && $check == NULL){
+                $menu = Menu::where('id','=',$id)->first();
 
                 TransactionDetail::create([
-                    'transaksiID' => $check->transaksiID,
+                    'transaksiID' => $transactionDetail->transaksiID,
                     'barangID' => $menu->id,
                     'jumlahBarang' => 1,
-                    'totalHarga' => $totalHarga,
+                    'totalHarga' => $menu->hargaJual,
                     'additionalNotes' => 'a',
                 ]);
     
-                Transaction::where('id',$check->transaksiID)
+                Transaction::where('id',$transactionDetail->transaksiID)
                         ->update([
-                            'totalHarga' => $check->totalHarga + $totalHarga,
+                            'totalHarga' => $transaction->totalHarga + $menu->hargaJual,
                 ]);
             }
 
@@ -95,39 +97,28 @@ class CartController extends Controller
     function remove_cartitem($id){
 
         $check = TransactionDetail::where('id','=',$id)->first();
-        $count = TransactionDetail::where('transaksiID','=',$check->transaksiID)->count();
+        $menu = Menu::where('id','=',$check->barangID)->first();
 
-        if($count == 1){
+        if($check->jumlahBarang > 1){
+
+            $transaction = Transaction::where('id','=',$check->transaksiID)->first();
+
+            TransactionDetail::where('id','=',$id)
+                ->update([
+                    'jumlahBarang' => $check->jumlahBarang - 1
+                ]);
+            Transaction::where('id','=',$check->transaksiID)
+                ->update([
+                    'totalHarga' => $transaction->totalHarga - $menu->hargaJual
+                ]);
+
+        }else if($check->jumlahBarang == 1){
 
             $delete1 = TransactionDetail::where('id','=',$id)->get();
             $delete2 = Transaction::where('id','=',$check->transaksiID)->get();
             $delete1->each->delete();
             $delete2->each->delete(); 
 
-        }else{
-            $delete1 = TransactionDetail::where('id','=',$id)->get();
-            $transaction = Transaction::where('id','=',$check->transaksiID)->first();
-
-            if($check->jumlahBarang > 1){
-
-                TransactionDetail::where('id','=',$id)
-                    ->update([
-                        'jumlahBarang' => $check->jumlahBarang - 1
-                    ]);
-                Transaction::where('id','=',$check->transaksiID)
-                    ->update([
-                        'totalHarga' => $transaction->totalHarga - $check->totalHarga
-                    ]);
-
-            }else if($check->jumlahBarang == 1){
-
-                Transaction::where('id','=',$check->transaksiID)
-                ->update([
-                    'totalHarga' => $transaction->totalHarga - $check->totalHarga,
-                ]);
-                $delete1->each->delete();
-
-            }
         }
 
         return redirect('user/home')->with('Success','Your Item has been Deleted');

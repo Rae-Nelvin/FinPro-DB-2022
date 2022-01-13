@@ -25,8 +25,8 @@
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                             <a href="{{ route('admin.home') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
                             <a href="{{ route('admin.menu') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Menus</a>
-                            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Transactions</a>
-                            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Staff</a>
+                            <a href="{{ route('admin.transaction') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Transactions</a>
+                            <a href="{{ route('admin.staff') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Staff</a>
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                     <select name="jobDesc" class="w-full h-12 px-2 rounded-md text-black">
                         <option value="Chef">Chef</option>
                         <option value="Courrier">Courrier</option>
-                        <option value="Customer_Service">Customer Service</option>
+                        <option value="Cashier">Cashier</option>
                     <span class="text-red-600">@error('jobDesc'){{ $message }} @enderror</span>
                     </select>
                 </div>

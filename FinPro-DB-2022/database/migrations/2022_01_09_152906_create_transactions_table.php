@@ -19,6 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('staffID');
             $table->bigInteger('totalHarga');
             $table->string('status');
+            $table->string('buktiPembayaran')->nullable();
             $table->timestamps();
         });
 
