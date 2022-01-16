@@ -19,7 +19,7 @@ class CreateDeliveriesTable extends Migration
             $table->string('status');
             $table->string('alamatPembeli');
             $table->unsignedBigInteger('pembeliID');
-            $table->unsignedBigInteger('staffID');
+            $table->unsignedBigInteger('deliveryStaffID');
             $table->timestamps();
         });
 
@@ -28,7 +28,7 @@ class CreateDeliveriesTable extends Migration
                     ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('pembeliID')->references('id')->on('users')
                     ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('staffID')->references('id')->on('staff')
+            $table->foreign('deliveryStaffID')->references('id')->on('staff')
                     ->onUpdate('cascade')->onDelete('cascade');
         });
     }

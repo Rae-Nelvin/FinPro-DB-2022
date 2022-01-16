@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Staff</title>
+    <title>Staff Dashboard | Cashier</title>
     <link rel="stylesheet" href="{{ asset('tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('tailwind-2.css') }}">
-    <link rel="stylesheet" href="{{ asset('btn-css.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="bg-gray-900">
 
@@ -23,10 +21,10 @@
                     <div class="hidden sm:block sm:ml-6">
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <a href="{{ route('admin.home') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                            <a href="{{ route('admin.menu') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Menus</a>
-                            <a href="{{ route('admin.transaction') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Transactions</a>
-                            <a href="{{ route('admin.staff') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"  aria-current="page">Staff</a>
+                            <a href="{{ route('staff.home') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                            <a href="{{ route('staff.cashier') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Cashier</a>
+                            <a href="{{ route('staff.chef') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Chef</a>
+                            <a href="{{ route('staff.delivery') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Delivery</a>
                         </div>
                     </div>
                 </div>
@@ -40,53 +38,71 @@
                             </button>
                         </div>
                     </div>
-                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ml-4">Logout</a>
+                    <a href="{{ route('admin.logout') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ml-4">Logout</a>
                 </div>
             </div>
         </div>
     </nav>
-    
+
     <div class="container mx-auto mt-12 pl-14 pb-20">
         @if(Session::get('Success'))
             <div class="bg-green-600 text-green-100 p-2 text-lg font-medium rounded-md mb-4">
                 {{ Session::get('Success') }}
             </div>
         @endif
-        <div class="flex justify-content-end align-content-end">
-            <div class="bg-gray-800 mx-auto w-auto py-2 px-4 rounded-md mb-4 hover:bg-green-400 transition-all hover:scale-110 transform transition-all cursor-pointer">
-                <a class="text-white font-medium text-2xl" href="{{ route('admin.uploadstaff') }}">Add New</a>
-            </div>
-        </div>
         <div class="ml-12 mt-4 mb-14">
-            <h1 class="text-white text-4xl font-medium">Staff Lists</h1>
+            <h1 class="text-white text-4xl font-medium">Transaction Lists</h1>
         </div>
-        <table class="table-auto text-white border border-black border-collapse mt-8">
+        <table class="table-auto text-white border border-black border-collapse mt-8 w-full">
             <thead class="bg-gray-800">
                 <tr class="row">
-                    <th class="py-4 px-2">No.</th>
-                    <th>Staff Name</th>
-                    <th>Staff Image</th>
-                    <th>Staff Email</th>
-                    <th>Staff Gender</th>
-                    <th>Staff Phone Number</th>
-                    <th>Staff Job Desc</th>
-                    <th>Last Update</th>
+                    <th class="py-4 px-2">Transaction ID</th>
+                    <th>Nama Pembeli</th>
+                    <th>Barang</th>
+                    <th>Jumlah Barang</th>
+                    <th>Additional Notes</th>
+                    <th>Total Harga</th>
+                    <th>Status Pembayaran</th>
+                    <th>Pembayaran</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-gray-600 text-center">
-                @foreach($staff as $staffs)
+                @foreach($cashier as $cashiers)
                 <tr class="row border border-black font-medium text-lg">
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $staffs->nama }}</td>
-                    <td class="w-1/5 p-4"><img src="/assets/uploads/staff/{{ $staffs->linkGambar }}" alt="{{ $staffs->linkGambar }}" class="rounded-md"></td>
-                    <td>{{ $staffs->email }}</td>
-                    <td>{{ $staffs->gender }}</td>
-                    <td>{{ $staffs->phone }}</td>
-                    <td>{{ $staffs->jobDesc}}</td>
-                    <td>{{ \Carbon\Carbon::parse($staffs['updated_at'])->format('j F, Y') }}</td>
-                    <td><a class="button touch edit edit-btn" href="{{ route('admin.editstaff',$staffs->id) }}"></a>
-                        <a class="button touch delete" href="{{ route('admin.delete_staff',$staffs->id) }}"></a></td>
+                    <td>TR {{ $cashiers->transactionID }}</td>
+                    <td>{{ $cashiers->nama }}</td>
+                    <td>
+                        <ul>
+                            @foreach($menu as $menus )
+                            <li>
+                            {{ $menus->namaBarang }}
+                            </li>
+                            @endforeach
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            @foreach($menu as $menus)
+                            <li>
+                                {{ $menus->jumlahBarang }}
+                            </li>
+                            @endforeach
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            @foreach($menu as $menus)
+                            <li>
+                                {{ $menus->additionalNotes }}
+                            </li>
+                            @endforeach
+                        </ul>
+                    </td>
+                    <td>Rp {{ $cashiers->totalHarga }}</td>
+                    <td>{{ $cashiers->status}}</td>
+                    <td>BCA</td>
+                    <td><a class="bg-green-600 text-white p-1 rounded-md hover:bg-green-400 hover:scale-105 transition-all" href="{{ route('staff.cashierApprove',$cashiers->transactionsID) }}">Approve</a></td>
                 </tr>
                 @endforeach
             </tbody>

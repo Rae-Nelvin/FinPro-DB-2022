@@ -36,12 +36,16 @@ class Staff extends Authenticatable
         'remember_token',
     ];
 
-    public function staffID(){
-        return $this->belongsTo(Transaction::class,'staffID','id');
+    public function cashierStaffID(){
+        return $this->belongsTo(Transaction::class,'cashierStaffID','id');
+    }
+    
+    public function chefStaffID(){
+        return $this->belongsTo(Transaction::class,'chefStaffID','id');
     }
 
     public function staffID_delivery(){
-        return $this->belongsTo(Delivery::class,'staffID','id');
+        return $this->belongsTo(Delivery::class,'deliveryStaffID','id');
     }
 
 }

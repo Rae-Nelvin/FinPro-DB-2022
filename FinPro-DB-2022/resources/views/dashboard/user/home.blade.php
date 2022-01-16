@@ -276,7 +276,7 @@
                 @foreach($menu as $menus)
                 <div class="col-lg-4 col-md-6 portfolio-item filter-app">
                     <div class="portfolio-wrap">
-                    <img src="/assets/menus/{{ $menus->linkGambar }}" class="img-fluid" alt="{{ $menus->linkGambar }}">
+                    <img src="/assets/uploads/menus/{{ $menus->linkGambar }}" class="img-fluid" alt="{{ $menus->linkGambar }}">
                     <div class="portfolio-info">
                         <h4>{{$menus->namaMenu }}</h4>
                         <div class="portfolio-links">

@@ -21,6 +21,7 @@ class Menu extends Authenticatable
         'namaMenu',
         'deskripsiMenu',
         'jumlahBarang',
+        'categoryMenu',
         'hargaJual',
         'hargaBeli',
         'linkGambar'

@@ -69,7 +69,7 @@
                         @foreach($cart as $carts)
                         <tr>
                             <td class="col-3">
-                                <img src="/assets/menus/{{ $carts->linkGambar }}" alt="{{ $carts->linkGambar }}" style="width: 70%">
+                                <img src="/assets/uploads/menus/{{ $carts->linkGambar }}" alt="{{ $carts->linkGambar }}" style="width: 70%">
                                 <div class="des">
                                     <p>{{ $carts->namaMenu }}</p>
                                 </div>

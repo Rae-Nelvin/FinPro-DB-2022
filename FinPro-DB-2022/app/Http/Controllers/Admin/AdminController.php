@@ -24,18 +24,20 @@ class AdminController extends Controller
             'name' => 'required',
             'picture' => 'required',
             'description' => 'required',
+            'category' => 'required',
             'quantity' => 'required|min:1|max:1000',
             'hargaJual' => 'required|min:1',
             'hargaBeli' => 'required|min:1'
         ]);
 
         $imageName = $request->name.'-'.$request->picture->getClientOriginalName();
-        $request->picture->move(public_path('assets/menus/'), $imageName);
+        $request->picture->move(public_path('assets/uploads/menus/'), $imageName);
 
         Menu::create([
             'namaMenu' => $request->name,
             'deskripsiMenu' => $request->description,
             'jumlahBarang' => $request->quantity,
+            'categoryMenu' => $request->category,
             'hargaJual' => $request->hargaJual,
             'hargaBeli' => $request->hargaBeli,
             'linkGambar' => $imageName
@@ -55,19 +57,21 @@ class AdminController extends Controller
             'name' => 'required',
             'description' => 'required',
             'picture' => 'required',
+            'category' => 'required',
             'quantity' => 'required|min:1|max:1000',
             'hargaJual' => 'required|min:1',
             'hargaBeli' => 'required|min:1'
         ]);
 
         $imageName = $request->name.'-'.$request->picture->getClientOriginalName();
-        $request->picture->move(public_path('assets/menus/'), $imageName);
+        $request->picture->move(public_path('assets/uploads/menus/'), $imageName);
 
         Menu::where('id',$request->id)
             ->update([
                 'namaMenu' => $request->name,
                 'deskripsiMenu' => $request->description,
                 'jumlahBarang' => $request->quantity,
+                'categoryMenu' => $request->category,
                 'hargaJual' => $request->hargaJual,
                 'hargaBeli' => $request->hargaBeli,
                 'linkGambar' => $imageName
@@ -100,7 +104,7 @@ class AdminController extends Controller
 
         if($request->picture){
             $imageName = $request->name.'/'.$request->picture->getClientOriginalName();
-            $request->picture->move(public_path('assets/staff/'.$request->name), $imageName);
+            $request->picture->move(public_path('assets/uploads/staff/'.$request->name), $imageName);
         }else{
             $imageName = '';
         }
@@ -136,7 +140,7 @@ class AdminController extends Controller
 
         if($request->picture){
             $imageName = $request->name.'/'.$request->picture->getClientOriginalName();
-            $request->picture->move(public_path('assets/staff/'.$request->name), $imageName);
+            $request->picture->move(public_path('assets/uploads/staff/'.$request->name), $imageName);
         }else{
             $imageName = '';
         }

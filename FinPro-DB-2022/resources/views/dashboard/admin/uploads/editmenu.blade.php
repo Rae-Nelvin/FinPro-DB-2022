@@ -88,14 +88,22 @@
                     <textarea name="description" placeholder="{{ $menus->deskripsiMenu }}" class="w-full h-auto p-4 rounded-md text-black konten text-md"></textarea>
                     <span class="text-red-600 text-xl">@error('description'){{ $message }} @enderror</span>
                 </div>
+                <div class="space-y-4 text-lg">
+                    <label for="Menu's Category">Menu's Category</label><br>
+                    <select name="category" class="w-full h-12 px-2 rounded-md text-black">
+                        <option value="Cookies">Cookies</option>
+                        <option value="Drinks">Drinks</option>
+                    <span class="text-red-600">@error('category'){{ $message }} @enderror</span>
+                    </select>
+                </div>
                 <div class="space-y-4 text-xl">
                     <label for="Harga Beli">Menu's Harga Beli</label><br>
-                    <input type="number" name="hargaBeli" min="1" class="w-full h-10 p-4 rounded-md text-black" placeholder="Rp. {{ $menus->hargaJual }}">
+                    <input type="number" name="hargaBeli" min="1" class="w-full h-10 p-4 rounded-md text-black" placeholder="Rp. {{ $menus->hargaBeli }}">
                     <span class="text-red-600">@error('hargaBeli'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4 text-xl">
                     <label for="Harga Jual">Menu's Harga Jual</label><br>
-                    <input type="number" name="hargaJual" min="1" class="w-full h-10 p-4 rounded-md text-black" placeholder="Rp. {{ $menus->hargaBeli }}">
+                    <input type="number" name="hargaJual" min="1" class="w-full h-10 p-4 rounded-md text-black" placeholder="Rp. {{ $menus->hargaJual }}">
                     <span class="text-red-600">@error('hargaJual'){{ $message }} @enderror</span>
                 </div>
                 <div class="space-y-4 text-xl">

@@ -48,7 +48,7 @@ class UserController extends Controller
         if(Auth::guard('web')->attempt($creds)){
             return redirect()->route('user.home');
         }else{
-            return redirect()->route('user.login')->with('Fail','Incorrect credentials');
+            return redirect()->route('login')->with('Fail','Incorrect credentials');
         }
     }
 

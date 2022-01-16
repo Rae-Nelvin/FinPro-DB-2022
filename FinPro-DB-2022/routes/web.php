@@ -35,7 +35,7 @@ Route::prefix('user')->name('user.')->group(function(){
 
     Route::middleware(['auth:web','PreventBackHistory'])->group(function(){
         Route::get('/home',[UserController::class,'home'])->name('home');
-        Route::get('/addtocart',[CartController::class,'addtocart'])->name('addtocart');
+        Route::post('/addtocart',[CartController::class,'addtocart'])->name('addtocart');
         Route::get('/portofolio/{id}',[userController::class,'portofolio'])->name('portofolio');
         Route::get('/remove_cartitem/{id}',[CartController::class,'remove_cartitem'])->name('remove_cartitem');
         Route::get('/cart',[CartController::class,'cart'])->name('cart');
@@ -76,6 +76,12 @@ Route::prefix('staff')->name('staff.')->group(function(){
 
     Route::middleware(['auth:staff','PreventBackHistory'])->group(function(){
         Route::view('/home','dashboard.staff.home')->name('home');
+        Route::get('/cashier',[StaffController::class,'cashier'])->name('cashier');
+        Route::get('/cashier/approve/{id}',[StaffController::class,'cashierApprove'])->name('cashierApprove');
+        Route::get('/chef/approve/{id}',[StaffController::class,'chefApprove'])->name('chefApprove');
+        Route::get('/delivery/approve/{id}',[StaffController::class,'deliveryApprove'])->name('deliveryApprove');
+        Route::get('/chef',[StaffController::class,'chef'])->name('chef');
+        Route::get('/delivery',[StaffController::class,'delivery'])->name('delivery');
         Route::get('/logout',[StaffController::class,'logout'])->name('logout');
     });
 });

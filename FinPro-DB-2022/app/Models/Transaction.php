@@ -20,17 +20,23 @@ class Transaction extends Authenticatable
      */
     protected $fillable = [
         'pembeliID',
-        'staffID',
+        'cashierStaffID',
+        'chefStaffID',
         'totalHarga',
         'status',
+        'buktiPembayaran'
     ];
 
     public function pembeliID(){
         return $this->hasOne(User::class,'id','pembeliID');
     }
 
-    public function staffID(){
-        return $this->hasOne(Staff::class,'id','staffID');
+    public function cashierStaffID(){
+        return $this->hasOne(Staff::class,'id','cashierStaffID');
+    }
+
+    public function chefStaffID(){
+        return $this->hasOne(Staff::class,'id','chefStaffID');
     }
 
     public function transaksiID(){

@@ -84,7 +84,7 @@
 
           <div class="col-lg-8">
               <div class="align-items-center">
-                <img src="/assets/menus/{{ $menu->linkGambar }}" alt="{{ $menu->linkGambar }}" style="width: 100%">
+                <img src="/assets/uploads/menus/{{ $menu->linkGambar }}" alt="{{ $menu->linkGambar }}" style="width: 100%">
               </div>
           </div>
 
@@ -105,7 +105,7 @@
                     <label for="Additional Notes">Additional Notes</label><br><br>
                     <textarea name="additionalNotes"></textarea><br><br>
                     <input type="hidden" name="id" value="{{ $menu->id }}">
-                    <button type="submit" class ="detail-button">Buy</button>
+                    <button type="submit" class ="detail-button" value="submit">Buy</button>
                   </form>
               </div>
             </div>

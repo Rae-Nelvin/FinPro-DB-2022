@@ -28,13 +28,12 @@ class CartController extends Controller
         $menu = Menu::where('id',$id)->first();
         // Validating Requests
         $request->validate([
-            'jumlahBarang' => 'required|min:1|max:$menu->jumlahBarang'
+            'quantity' => 'required|min:1'
         ]);
         $jumlahBarang = $request->quantity;
         $additionalNotes = $request->additionalNotes;
-        $staff = Staff::count();
-        $rand = rand(1,$staff);
-        $staff = Staff::where('id','=',$rand)->first();
+        $cashierStaffID = Staff::inRandomOrder()->where('jobDesc','=','Cashier')->first();
+        $chefStaffID = Staff::inRandomOrder()->where('jobDesc','=','Chef')->first();
         $check = Transaction::where('status','=','unpaid')->where('pembeliID','=',Auth::user()->id)->first();
 
         // If there's no datas in Transaction Detail or brand new transaction
@@ -42,8 +41,9 @@ class CartController extends Controller
 
             Transaction::create([
                 'pembeliID' => Auth::user()->id,
-                'staffID' => $staff->id,
-                'totalHarga' => $menu->hargaJual,
+                'cashierStaffID' => $cashierStaffID->id,
+                'chefStaffID' => $chefStaffID->id,
+                'totalHarga' => $menu->hargaJual * $jumlahBarang,
                 'status' => 'unpaid',
             ]);
 
@@ -53,7 +53,7 @@ class CartController extends Controller
                 'transaksiID' => $transaction->id,
                 'barangID' => $menu->id,
                 'jumlahBarang' => $jumlahBarang,
-                'totalHarga' => $menu->hargaJual,
+                'totalHarga' => $menu->hargaJual * $jumlahBarang,
                 'additionalNotes' => $additionalNotes,
             ]);
     
@@ -98,7 +98,7 @@ class CartController extends Controller
 
         }
 
-        return redirect()->back()->with('Success','Your Item has been Added to the Cart!');
+        return redirect('user/home')->with('Success','Your Item has been Added to the Cart!');
 
     }
 

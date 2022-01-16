@@ -22,7 +22,7 @@ class Delivery extends Authenticatable
         'status',
         'alamatPembeli',
         'pembeliID',
-        'staffID',
+        'deliveryStaffID',
     ];
 
     public function transaksiID_delivery(){
@@ -32,7 +32,7 @@ class Delivery extends Authenticatable
         return $this->hasOne(User::class,'id','pembeliID');
     }
     public function staffID_delivery(){
-        return $this->hasOne(Staff::class,'id','staffID');
+        return $this->hasOne(Staff::class,'id','deliveryStaffID');
     }
     
 }
