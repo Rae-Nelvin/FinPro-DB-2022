@@ -97,7 +97,7 @@
                 <li class="cart-total">Total
                 <span>Rp {{ $totalHarga->totalHarga }}</span></li>
             </ul>
-            <a href="#"class="proceed-btn">Proceed to Checkout</a>
+            <a href="{{ route('user.checkout') }}"class="proceed-btn">Proceed to Checkout</a>
         </div>
     </div>
 

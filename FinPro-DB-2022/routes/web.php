@@ -39,6 +39,9 @@ Route::prefix('user')->name('user.')->group(function(){
         Route::get('/portofolio/{id}',[userController::class,'portofolio'])->name('portofolio');
         Route::get('/remove_cartitem/{id}',[CartController::class,'remove_cartitem'])->name('remove_cartitem');
         Route::get('/cart',[CartController::class,'cart'])->name('cart');
+        Route::get('/checkout',[CartController::class,'checkout'])->name('checkout');
+        Route::post('/payment',[CartController::class,'payment'])->name('payment');
+        Route::post('/checkPayment',[CartController::class,'checkPayment'])->name('checkPayment');
         Route::get('/logout',[UserController::class,'logout'])->name('logout');
         Route::view('/transaction','dashboard.user.transaction')->name('transaction');
     });
@@ -53,7 +56,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::view('/home','dashboard.admin.home')->name('home');
         Route::get('/menu',[AdminController::class,'menu'])->name('menu');
         Route::view('/upload/menu','dashboard.admin.uploads.menu')->name('uploadmenu');
-        Route::view('/transaction','dashboard.admin.transaction')->name('transaction');
+        Route::get('/transaction',[AdminController::class,'transaction'])->name('transaction');
         Route::get('/staff',[AdminController::class,'staff'])->name('staff');
         Route::view('/upload/staff','dashboard.admin.uploads.staff')->name('uploadstaff');
         Route::get('/edit/staff/{id}',[AdminController::class,'editstaff'])->name('editstaff');

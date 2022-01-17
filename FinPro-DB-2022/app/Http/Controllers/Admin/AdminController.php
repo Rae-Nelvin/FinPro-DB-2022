@@ -7,7 +7,10 @@ use App\Models\Menu;
 use Illuminate\Http\Request;
 
 use App\Models\Staff;
+use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -84,6 +87,27 @@ class AdminController extends Controller
         $menu = Menu::where('id',$id)->get();
         $menu->each->delete();
         return redirect('admin/menu')->with('Success', 'Your Menu has been Deleted');
+    }
+
+    function transaction(){
+        $transactiontoday = DB::table('transactions')
+                    ->join('transaction_details','transactions.id','=','transaction_details.transaksiID')
+                    ->join('users','users.id','=','transactions.pembeliID')
+                    ->join('menus','transaction_details.barangID','=','menus.id')
+                    ->select('users.name as pembeliNama', 'transactions.id as tid', 'transactions.totalHarga as totalHarga', 'transactions.cashierStaffID as cashierStaffID',
+                            'menus.namaMenu as namaMenu','transaction_details.jumlahBarang as jumlahBarang','transactions.chefStaffID as chefStaffID','transactions.status as status','transactions.updated_at as updated_at')
+                    ->whereDate('transactions.updated_at',Carbon::today())
+                    ->get();
+        $transactionThisMonth = DB::table('transactions')
+                    ->join('transaction_details','transactions.id','=','transaction_details.transaksiID')
+                    ->join('users','users.id','=','transactions.pembeliID')
+                    ->join('menus','transaction_details.barangID','=','menus.id')
+                    ->select('users.name as pembeliNama', 'transactions.id as tid', 'transactions.totalHarga as totalHarga', 'transactions.cashierStaffID as cashierStaffID',
+                            'menus.namaMenu as namaMenu','transaction_details.jumlahBarang as jumlahBarang','transactions.chefStaffID as chefStaffID','transactions.status as status','transactions.updated_at as updated_at')
+                    ->whereMonth('transactions.updated_at',Carbon::now()->month)
+                    ->get();
+        
+        return view('dashboard.admin.transaction',['transactiontoday'=>$transactiontoday,'transactionThisMonth'=>$transactionThisMonth]);
     }
 
     function staff(){

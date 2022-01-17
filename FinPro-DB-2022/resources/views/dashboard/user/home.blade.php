@@ -54,6 +54,11 @@
         <!-- End Header -->
 
         <!-- ======= Hero Section ======= -->
+        @if(Session::get('Success'))
+            <div class="bg-green-600 text-green-100 p-2 text-lg font-medium rounded-md mb-4">
+                {{ Session::get('Success') }}
+            </div>
+        @endif
         <section id="hero">
             <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
 
@@ -279,8 +284,8 @@
                     <img src="/assets/uploads/menus/{{ $menus->linkGambar }}" class="img-fluid" alt="{{ $menus->linkGambar }}">
                     <div class="portfolio-info">
                         <h4>{{$menus->namaMenu }}</h4>
-                        <div class="portfolio-links">
-                        <a href="/assets/menus/{{ $menus->linkGambar }}" data-gallery="portfolioGallery" class="portfolio-lightbox" ><i class="bx bx-plus"></i></a>
+                        <div class="portfolio-links"><br>
+                        <a href="/assets/uploads/menus/{{ $menus->linkGambar }}" data-gallery="portfolioGallery" class="portfolio-lightbox" ><i class="bx bx-plus"></i></a>
                         <a href="{{ route('user.portofolio',$menus->id) }}" title="More Details"><i class="bx bx-link"></i></a>
                         </div>
                     </div>

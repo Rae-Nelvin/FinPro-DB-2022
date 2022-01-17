@@ -26,7 +26,7 @@ class StaffController extends Controller
         $creds = $request->only('email','password');
         if($role->jobDesc == 'Admin'){
             $guard = 'admin';
-        }else if($role->jobDesc != 'Admin'){
+        }else if($role->jobDesc == 'Cashier' || $role->jobDesc == 'Courrier' || $role->jobDesc == 'Chef'){
             $guard = 'staff';
         }
 

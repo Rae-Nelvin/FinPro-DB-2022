@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Delivery;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\Staff;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -17,6 +19,7 @@ class CartController extends Controller
                     ->join('transaction_details','transactions.id','=','transaction_details.transaksiID')
                     ->join('menus','menus.id','=','transaction_details.barangID')
                     ->where('pembeliID','=',Auth::user()->id)
+                    ->where('transactions.status','=','unpaid')
                     ->select('menus.namaMenu as namaMenu', 'menus.linkGambar as linkGambar', 'transaction_details.jumlahBarang as jumlahBarang', 'menus.hargaJual as hargaJual', 'transaction_details.id as tdid', 'transactions.totalHarga as totalHarga', 'transaction_details.totalHarga as totalHarga2')
                     ->get();
         $totalHarga = Transaction::where('pembeliID','=',Auth::user()->id)->first();
@@ -130,6 +133,66 @@ class CartController extends Controller
         }
 
         return redirect('user/home')->with('Success','Your Item has been Deleted');
+    }
+
+    function checkout(){
+        $transaction = DB::table('transactions')
+                    ->join('transaction_details','transactions.id','=','transaction_details.transaksiID')
+                    ->join('menus','menus.id','=','transaction_details.barangID')
+                    ->where('pembeliID','=',Auth::user()->id)
+                    ->where('status','=','Unpaid')
+                    ->select('menus.namaMenu as namaMenu', 'menus.linkGambar as linkGambar', 'transaction_details.jumlahBarang as jumlahBarang', 'menus.hargaJual as hargaJual', 'transactions.id as tdid', 'transactions.totalHarga as totalHarga', 'transaction_details.totalHarga as totalHarga2')
+                    ->get();
+        $user = DB::table('users')
+                ->where('id','=',Auth::user()->id)
+                ->first();
+        return view('dashboard.user.checkout',['transaction'=>$transaction,'user'=>$user]);
+    }
+
+    function payment(Request $request){
+        $deliveryStaffID = Staff::inRandomOrder()->where('jobDesc','=','Courrier')->first();
+        if($request->address){
+            Delivery::create([
+                'transaksiID' => $request->transaksiID,
+                'status' => 'Undelivered',
+                'alamatPembeli' => $request->address,
+                'pembeliID' => $request->pembeliID,
+                'deliveryStaffID' => $deliveryStaffID->id
+            ]);
+        }
+
+        $transaction = DB::table('transactions')
+                    ->join('transaction_details','transactions.id','=','transaction_details.transaksiID')
+                    ->join('menus','menus.id','=','transaction_details.barangID')
+                    ->where('pembeliID','=',Auth::user()->id)
+                    ->where('status','=','Unpaid')
+                    ->select('menus.namaMenu as namaMenu', 'menus.linkGambar as linkGambar', 'transaction_details.jumlahBarang as jumlahBarang', 'menus.hargaJual as hargaJual', 'transactions.id as tdid', 'transactions.totalHarga as totalHarga', 'transaction_details.totalHarga as totalHarga2')
+                    ->get();
+        $user = DB::table('users')
+                ->where('id','=',Auth::user()->id)
+                ->first();
+
+        return view('dashboard.user.payment',['transaction'=>$transaction,'user'=>$user]);
+    }
+
+    function checkPayment(Request $request){
+        // Validating Inputs
+        $request->validate([
+            'buktiPembayaran' => 'required'
+        ]);
+
+        $pembeliName = User::where('id','=',$request->pembeliID)->first();
+
+        $imageName = $pembeliName->name.'-'.$request->transaksiID.'-'.$request->buktiPembayaran->getClientOriginalName();
+        $request->buktiPembayaran->move(public_path('assets/uploads/buktiPembayaran/'), $imageName);
+
+        Transaction::where('id','=',$request->transaksiID)
+                ->update([
+                    'status' => 'Transferred',
+                    'buktiPembayaran' => $imageName
+                ]);
+        
+        return redirect('user/home')->with('Success','Your Payment is being Checked');
     }
 
 }

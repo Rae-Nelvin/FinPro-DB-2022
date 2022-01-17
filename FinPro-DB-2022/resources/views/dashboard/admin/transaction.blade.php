@@ -40,7 +40,7 @@
                             </button>
                         </div>
                     </div>
-                    <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ml-4">Logout</a>
+                    <a href="{{ route('admin.logout') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ml-4">Logout</a>
                 </div>
             </div>
         </div>
@@ -56,40 +56,29 @@
                     <th class="py-4 px-2">Transaction ID</th>
                     <th class="px-8">Transaction Details</th>
                     <th class="px-16">Pembeli</th>
-                    <th class="px-16">Staff</th>
+                    <th class="px-16">Cashier Staff</th>
+                    <th class="px-16">Chef Staff</th>
+                    <th class="px-16">Courrier Staff</th>
                     <th class="px-16">Total Harga</th>
                     <th class="px-16">Status</th>
                     <th class="px-16">Last Update</th>
                 </tr>
             </thead>
             <tbody class="bg-gray-600 text-center">
+                @foreach ($transactiontoday as $transactiontodays)
                 <tr class="row border border-black font-medium text-xl">
-                    <td class="py-4 px-2">1</td>
-                    <td>TR001</td>
-                    <td>Silvia Pasifica</td>
-                    <td>Leonardo Wijaya</td>
-                    <td>IDR Rp 100.000</td>
-                    <td>On Delivery</td>
-                    <td>12 Agustus 2021 17:00</td>
+                    <td class="py-4 px-2">TR {{ $transactiontodays->tid }}</td>
+                    <td>{{ $transactiontodays->namaMenu }} | {{$transactiontodays->jumlahBarang }} Qty
+                    </td>
+                    <td>{{ $transactiontodays->pembeliNama }}</td>
+                    <td>{{ $transactiontodays->cashierStaffID }}</td>
+                    <td>{{ $transactiontodays->chefStaffID }}</td>
+                    <td></td>
+                    <td>Rp {{ $transactiontodays->totalHarga }}</td>
+                    <td>{{ $transactiontodays->status }}</td>
+                    <td>{{ $transactiontodays->updated_at }}</td>
                 </tr>
-                <tr class="row border border-black font-medium text-xl">
-                    <td class="py-4 px-2">2</td>
-                    <td>TR002</td>
-                    <td>Audina Maharani</td>
-                    <td>Ian Putra Ismaya</td>
-                    <td>IDR Rp 120.000</td>
-                    <td>On Proccess</td>
-                    <td>12 Agustus 2021 18:15</td>
-                </tr>
-                <tr class="row border border-black font-medium text-xl">
-                    <td class="py-4 px-2">3</td>
-                    <td>TR003</td>
-                    <td>Kevin Charles</td>
-                    <td>Gede Dyava Savitra</td>
-                    <td>IDR Rp 150.000</td>
-                    <td>On Delivery</td>
-                    <td>12 Agustus 2021 18:10</td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -104,40 +93,29 @@
                     <th class="py-4 px-2">Transaction ID</th>
                     <th class="px-8">Transaction Details</th>
                     <th class="px-16">Pembeli</th>
-                    <th class="px-16">Staff</th>
+                    <th class="px-16">Cashier Staff</th>
+                    <th class="px-16">Chef Staff</th>
+                    <th class="px-16">Courrier Staff</th>
                     <th class="px-16">Total Harga</th>
                     <th class="px-16">Status</th>
                     <th class="px-16">Last Update</th>
                 </tr>
             </thead>
             <tbody class="bg-gray-600 text-center">
+                @foreach ($transactionThisMonth as $transactionThisMonths)
                 <tr class="row border border-black font-medium text-xl">
-                    <td class="py-4 px-2">1</td>
-                    <td>TR001</td>
-                    <td>Silvia Pasifica</td>
-                    <td>Leonardo Wijaya</td>
-                    <td>IDR Rp 100.000</td>
-                    <td>Delivered</td>
-                    <td>12 Agustus 2021 17:00</td>
+                    <td class="py-4 px-2">TR {{ $transactionThisMonths->tid }}</td>
+                    <td>{{ $transactionThisMonths->namaMenu }} | {{$transactionThisMonths->jumlahBarang }} Qty
+                    </td>
+                    <td>{{ $transactionThisMonths->pembeliNama }}</td>
+                    <td>{{ $transactionThisMonths->cashierStaffID }}</td>
+                    <td>{{ $transactionThisMonths->chefStaffID }}</td>
+                    <td></td>
+                    <td>Rp {{ $transactionThisMonths->totalHarga }}</td>
+                    <td>{{ $transactionThisMonths->status }}</td>
+                    <td>{{ $transactionThisMonths->updated_at }}</td>
                 </tr>
-                <tr class="row border border-black font-medium text-xl">
-                    <td class="py-4 px-2">2</td>
-                    <td>TR002</td>
-                    <td>Audina Maharani</td>
-                    <td>Ian Putra Ismaya</td>
-                    <td>IDR Rp 120.000</td>
-                    <td>Delivered</td>
-                    <td>12 Agustus 2021 18:15</td>
-                </tr>
-                <tr class="row border border-black font-medium text-xl">
-                    <td class="py-4 px-2">3</td>
-                    <td>TR003</td>
-                    <td>Kevin Charles</td>
-                    <td>Gede Dyava Savitra</td>
-                    <td>IDR Rp 150.000</td>
-                    <td>Delivered</td>
-                    <td>12 Agustus 2021 18:10</td>
-                </tr>
+                    @endforeach
             </tbody>
         </table>
     </div>
