@@ -22,6 +22,7 @@ class Transaction extends Authenticatable
         'pembeliID',
         'cashierStaffID',
         'chefStaffID',
+        'deliveryStaffID',
         'totalHarga',
         'status',
         'buktiPembayaran'
@@ -37,6 +38,10 @@ class Transaction extends Authenticatable
 
     public function chefStaffID(){
         return $this->hasOne(Staff::class,'id','chefStaffID');
+    }
+
+    public function staffID_delivery(){
+        return $this->hasOne(Staff::class,'id','deliveryStaffID');
     }
 
     public function transaksiID(){

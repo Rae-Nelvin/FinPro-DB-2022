@@ -98,11 +98,8 @@ class CartController extends Controller
                             'totalHarga' => $transaction->totalHarga + $menu->hargaJual,
                 ]);
             }
-
         }
-
         return redirect('user/home')->with('Success','Your Item has been Added to the Cart!');
-
     }
 
     function remove_cartitem($id){
@@ -157,8 +154,11 @@ class CartController extends Controller
                 'status' => 'Undelivered',
                 'alamatPembeli' => $request->address,
                 'pembeliID' => $request->pembeliID,
-                'deliveryStaffID' => $deliveryStaffID->id
             ]);
+            Transaction::where('id','=',$request->transaksiID)
+                    ->update([
+                        'deliveryStaffID' => $deliveryStaffID->id
+                    ]);
         }
 
         $transaction = DB::table('transactions')

@@ -63,6 +63,7 @@
                             <th scope="col">Price</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Total</th>
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,6 +83,9 @@
                             </td>
                             <td>
                                 <h6>Rp. {{ $carts->totalHarga2 }}</h6>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger"><a href="{{ route('user.remove_cartitem',$carts->tdid) }}" style="text-decoration: none;color: white;">Delete 1 Qty</a></button>
                             </td>
                         </tr>
                         @endforeach

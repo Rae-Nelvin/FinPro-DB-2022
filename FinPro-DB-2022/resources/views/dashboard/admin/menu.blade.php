@@ -60,7 +60,7 @@
         <div class="ml-12 mt-4 mb-14">
             <h1 class="text-white text-4xl font-medium">Menu Lists</h1>
         </div>
-        <table class="table-auto text-white border border-black border-collapse mt-8">
+        <table class="table-auto text-white border border-black border-collapse mt-8 w-full">
             <thead class="bg-gray-800">
                 <tr class="row">
                     <th class="py-4 px-2">No.</th>

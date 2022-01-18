@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
             'email' => 'admin001@admin.com',
             'jobDesc' => 'Admin',
             'password' => Hash::make('admin001'),
-            'gender' => 'L',
+            'gender' => 'M',
             'phone' => '081330229959'
         ]);
 
@@ -29,7 +29,7 @@ class AdminSeeder extends Seeder
             'email' => 'admin002@admin.com',
             'jobDesc' => 'Admin',
             'password' => Hash::make('admin002'),
-            'gender' => 'L',
+            'gender' => 'M',
         ]);
 
         DB::table('staff')->insert([
@@ -37,7 +37,7 @@ class AdminSeeder extends Seeder
             'email' => 'admin003@admin.com',
             'jobDesc' => 'Admin',
             'password' => Hash::make('admin003'),
-            'gender' => 'L',
+            'gender' => 'M',
         ]);
     }
 }

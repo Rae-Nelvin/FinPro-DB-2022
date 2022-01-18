@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('pembeliID');
             $table->unsignedBigInteger('cashierStaffID');
             $table->unsignedBigInteger('chefStaffID');
+            $table->unsignedBigInteger('deliveryStaffID')->nullable();
             $table->bigInteger('totalHarga');
             $table->string('status');
             $table->string('buktiPembayaran')->nullable();
@@ -30,6 +31,8 @@ class CreateTransactionsTable extends Migration
             $table->foreign('cashierStaffID')->references('id')->on('staff')
                     ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('chefStaffID')->references('id')->on('staff')
+                    ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('deliveryStaffID')->references('id')->on('staff')
                     ->onUpdate('cascade')->onDelete('cascade');
         });
     }
