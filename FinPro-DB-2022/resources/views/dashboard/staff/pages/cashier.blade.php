@@ -58,9 +58,7 @@
                 <tr class="row">
                     <th class="py-4 px-2">Transaction ID</th>
                     <th>Nama Pembeli</th>
-                    <th>Barang</th>
-                    <th>Jumlah Barang</th>
-                    <th>Additional Notes</th>
+                    <th>Menu Detail</th>
                     <th>Total Harga</th>
                     <th>Status Pembayaran</th>
                     <th>Pembayaran</th>
@@ -72,36 +70,17 @@
                 <tr class="row border border-black font-medium text-lg">
                     <td>TR {{ $cashiers->transactionID }}</td>
                     <td>{{ $cashiers->nama }}</td>
-                    <td>
-                        <ul>
-                            @foreach($menu as $menus )
-                            <li>
-                            {{ $menus->namaBarang }}
-                            </li>
-                            @endforeach
-                        </ul>
-                    </td>
-                    <td>
-                        <ul>
-                            @foreach($menu as $menus)
-                            <li>
-                                {{ $menus->jumlahBarang }}
-                            </li>
-                            @endforeach
-                        </ul>
-                    </td>
-                    <td>
-                        <ul>
-                            @foreach($menu as $menus)
-                            <li>
-                                {{ $menus->additionalNotes }}
-                            </li>
-                            @endforeach
-                        </ul>
-                    </td>
+                    <td><a href="{{ route('staff.menuDetails',$cashiers->transactionID) }}">Menu Details</a></td>
                     <td>Rp {{ $cashiers->totalHarga }}</td>
-                    <td>{{ $cashiers->status}}</td>
-                    <td>BCA</td>
+                    <td>{{ $cashiers->status }}</td>
+                    <td>
+                        <form action="{{ route('staff.download-file') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input id="transaksiID" type="hidden" name="transaksiID" value="{{  $cashiers->transactionID }}" />
+                            <input id="type" type="hidden" name="type" value="submission" />
+                            <button type='submit' class='download_btn'>Download</button>
+                        </form>
+                    </td>
                     <td><a class="bg-green-600 text-white p-1 rounded-md hover:bg-green-400 hover:scale-105 transition-all" href="{{ route('staff.cashierApprove',$cashiers->transactionsID) }}">Approve</a></td>
                 </tr>
                 @endforeach

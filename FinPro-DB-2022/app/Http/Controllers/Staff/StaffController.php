@@ -44,13 +44,7 @@ class StaffController extends Controller
                     ->where('transactions.cashierStaffID','=',Auth::user()->id)
                     ->select('transactions.id as transactionID','staff.nama as nama','transactions.totalHarga as totalHarga','transactions.status as status','transactions.id as transactionsID')
                     ->get();
-        $menu = DB::table('transaction_details')
-                    ->join('menus','transaction_details.barangID','=','menus.id')
-                    ->join('transactions','transaction_details.transaksiID','=','transactions.id')
-                    ->where('transactions.cashierStaffID','=',Auth::user()->id)
-                    ->select('menus.namaMenu as namaBarang','transaction_details.jumlahBarang as jumlahBarang','transaction_details.additionalNotes as additionalNotes')
-                    ->get();
-        return view('dashboard.staff.pages.cashier',['cashier' => $cashier,'menu' => $menu]);
+        return view('dashboard.staff.pages.cashier',['cashier' => $cashier]);
     }
 
     function cashierApprove($id){
@@ -110,7 +104,31 @@ class StaffController extends Controller
                 'status' => 'Delivered'
             ]);
     return redirect()->back()->with('Succes','You have approved one of the transaction!');
-}
+    }
+
+    public function download(Request $request) {
+
+        $file = Transaction::where('id','=',$request->transaksiID)->first();
+
+        if($file){
+            return response()->download($file->buktiPembayaran, $file->buktiPembayaran);
+        }
+        else{
+            return back()->with('fail','There is no chosen file available yet!');
+        }
+    }
+
+    function menuDetails($id){
+        $transaction_details = DB::table('transaction_details')
+                                ->join('menus','menus.id','=','transaction_details.barangID')
+                                ->join('transactions','transactions.id','=','transaction_details.transaksiID')
+                                ->join('users','users.id','=','transactions.pembeliID')
+                                ->where('transaction_details.transaksiID','=',$id)
+                                ->select('transaction_details.transaksiID as id','users.name as namaPembeli','menus.namaMenu as namaMenu','transaction_details.jumlahBarang as jumlahBarang','transaction_details.totalHarga as totalHarga','transaction_details.additionalNotes as additionalNotes')
+                                ->get();
+        
+        return view('dashboard.staff.pages.detailMenu',['transaction_detail'=>$transaction_details]);
+    }
 
     function logout(){
         Auth::guard('staff')->logout();

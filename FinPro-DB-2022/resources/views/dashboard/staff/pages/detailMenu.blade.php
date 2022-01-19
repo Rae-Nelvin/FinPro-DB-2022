@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Dashboard | Chef</title>
+    <title>Staff Dashboard | Detail Menu</title>
     <link rel="stylesheet" href="{{ asset('tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('tailwind-2.css') }}">
 </head>
@@ -22,8 +22,8 @@
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                             <a href="{{ route('staff.home') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
-                            <a href="{{ route('staff.cashier') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cashier</a>
-                            <a href="{{ route('staff.chef') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Chef</a>
+                            <a href="{{ route('staff.cashier') }}" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Cashier</a>
+                            <a href="{{ route('staff.chef') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Chef</a>
                             <a href="{{ route('staff.delivery') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Delivery</a>
                         </div>
                     </div>
@@ -61,44 +61,19 @@
                     <th>Barang</th>
                     <th>Jumlah Barang</th>
                     <th>Additional Notes</th>
-                    <th>Status Pembayaran</th>
-                    <th>Actions</th>
+                    <th>Total Sub Harga</th>
                 </tr>
             </thead>
             <tbody class="bg-gray-600 text-center">
-                @foreach($chef as $chefs)
+                @foreach($transaction_detail as $transaction_details)
                 <tr class="row border border-black font-medium text-lg">
-                    <td>TR {{ $chefs->transactionID }}</td>
-                    <td>{{ $chefs->nama }}</td>
-                    <td>
-                        <ul>
-                            @foreach($menu as $menus )
-                            <li>
-                            {{ $menus->namaBarang }}
-                            </li>
-                            @endforeach
-                        </ul>
+                    <td>TR {{ $transaction_details->id }}</td>
+                    <td>{{ $transaction_details->namaPembeli }}</td>
+                    <td>{{ $transaction_details->namaMenu }}</td>
+                    <td>{{ $transaction_details->jumlahBarang }} Qty
                     </td>
-                    <td>
-                        <ul>
-                            @foreach($menu as $menus)
-                            <li>
-                                {{ $menus->jumlahBarang }}
-                            </li>
-                            @endforeach
-                        </ul>
-                    </td>
-                    <td>
-                        <ul>
-                            @foreach($menu as $menus)
-                            <li>
-                                {{ $menus->additionalNotes }}
-                            </li>
-                            @endforeach
-                        </ul>
-                    </td>
-                    <td>{{ $chefs->status}}</td>
-                    <td><a class="bg-green-600 text-white p-1 rounded-md hover:bg-green-400 hover:scale-105 transition-all" href="{{ route('staff.chefApprove',$chefs->transactionsID) }}">Approve</a></td>
+                    <td>{{ $transaction_details->additionalNotes }}</td>
+                    <td>{{ $transaction_details->totalHarga }}</td>
                 </tr>
                 @endforeach
             </tbody>

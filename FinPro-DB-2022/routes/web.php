@@ -86,6 +86,8 @@ Route::prefix('staff')->name('staff.')->group(function(){
         Route::get('/delivery/approve/{id}',[StaffController::class,'deliveryApprove'])->name('deliveryApprove');
         Route::get('/chef',[StaffController::class,'chef'])->name('chef');
         Route::get('/delivery',[StaffController::class,'delivery'])->name('delivery');
+        Route::post('/download-file', [StaffController::class, 'download'])->name('download-file');
+        Route::get('/menuDetails/{id}',[StaffController::class, 'menuDetails'])->name('menuDetails');
         Route::get('/logout',[AdminController::class,'logout'])->name('logout');
     });
 });
