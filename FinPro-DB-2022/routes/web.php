@@ -42,8 +42,9 @@ Route::prefix('user')->name('user.')->group(function(){
         Route::get('/checkout',[CartController::class,'checkout'])->name('checkout');
         Route::post('/payment',[CartController::class,'payment'])->name('payment');
         Route::post('/checkPayment',[CartController::class,'checkPayment'])->name('checkPayment');
+        Route::get('/deliveryApprove/{id}',[CartController::class,'deliveryApprove'])->name('deliveryApprove');
         Route::get('/logout',[UserController::class,'logout'])->name('logout');
-        Route::view('/transaction','dashboard.user.transaction')->name('transaction');
+        Route::get('/transaction',[UserController::class,'transaction'])->name('transaction');
     });
 });
 
@@ -85,6 +86,6 @@ Route::prefix('staff')->name('staff.')->group(function(){
         Route::get('/delivery/approve/{id}',[StaffController::class,'deliveryApprove'])->name('deliveryApprove');
         Route::get('/chef',[StaffController::class,'chef'])->name('chef');
         Route::get('/delivery',[StaffController::class,'delivery'])->name('delivery');
-        Route::get('/logout',[StaffController::class,'logout'])->name('logout');
+        Route::get('/logout',[AdminController::class,'logout'])->name('logout');
     });
 });

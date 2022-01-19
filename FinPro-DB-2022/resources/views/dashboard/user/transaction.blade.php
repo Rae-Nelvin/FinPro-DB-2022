@@ -26,7 +26,7 @@
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html">Bake n Cake</a></h1>
+      <h1 class="logo me-auto"><a href="{{ route('user.home') }}">Bake n Cake</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -57,221 +57,67 @@
 
   <main id="main">
     <div class="container">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Unpaid Transaction</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Ongoing Transaction</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">History Transaction</button>
-          </li>
-        </ul>
+        <h2>Unpaid Transactions</h2>
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
               <div class="col-md-12 order-md-1 mb-4">
                 <ul class="list-group mb-3">
                   <li class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
-                      <h4 class="my-1">Product name</h4>
-                      <h6 class="my-1">Nastar</h6>
-                      <h6 class="my-1">Fruit Pie</h6>
-                      <h6 class="my-1">Coffee</h6>
+                      @foreach( $unpaidTransaction as $unpaidTransactions )
+                      <h4 class="my-1">{{ $unpaidTransactions->id }}</h4>
+                        @foreach($unpaidTransaction2 as $unpaidTransaction2s)
+                        <h6 class="my-1">{{ $unpaidTransaction2s->namaMenu }}</h6>
+                        @endforeach
                     </div>
-                    <span class="text-muted">$12</span>
+                    <span class="text-muted">Rp {{ $unpaidTransactions->totalHarga }}</span>
+                    @endforeach
                   </li>
                 </ul>
               </div>
-              <div class="col-md-12 order-md-1 mb-4">
-                <ul class="list-group mb-3">
-                  <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                      <h4 class="my-1">Product name</h4>
-                      <h6 class="my-1">Nastar</h6>
-                      <h6 class="my-1">Fruit Pie</h6>
-                      <h6 class="my-1">Coffee</h6>
-                    </div>
-                    <span class="text-muted">$12</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-md-12 order-md-1 mb-4">
-                <ul class="list-group mb-3">
-                  <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                      <h4 class="my-1">Product name</h4>
-                      <h6 class="my-1">Nastar</h6>
-                      <h6 class="my-1">Fruit Pie</h6>
-                      <h6 class="my-1">Coffee</h6>
-                    </div>
-                    <span class="text-muted">$12</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-md-12 order-md-1 mb-4">
-                <ul class="list-group mb-3">
-                  <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                      <h4 class="my-1">Product name</h4>
-                      <h6 class="my-1">Nastar</h6>
-                      <h6 class="my-1">Fruit Pie</h6>
-                      <h6 class="my-1">Coffee</h6>
-                    </div>
-                    <span class="text-muted">$12</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-md-12 order-md-1 mb-4">
-                <ul class="list-group mb-3">
-                  <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                      <h4 class="my-1">Product name</h4>
-                      <h6 class="my-1">Nastar</h6>
-                      <h6 class="my-1">Fruit Pie</h6>
-                      <h6 class="my-1">Coffee</h6>
-                    </div>
-                    <span class="text-muted">$12</span>
-                  </li>
-                </ul>
-              </div>
-          </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="col-md-12 order-md-1 mb-4">
-              <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h4 class="my-1">Product name</h4>
-                    <h6 class="my-1">Nastar</h6>
-                    <h6 class="my-1">Fruit Pie</h6>
-                    <h6 class="my-1">Coffee</h6>
-                  </div>
-                  <span class="text-muted">$12</span>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-12 order-md-1 mb-4">
-              <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h4 class="my-1">Product name</h4>
-                    <h6 class="my-1">Nastar</h6>
-                    <h6 class="my-1">Fruit Pie</h6>
-                    <h6 class="my-1">Coffee</h6>
-                  </div>
-                  <span class="text-muted">$12</span>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-12 order-md-1 mb-4">
-              <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h4 class="my-1">Product name</h4>
-                    <h6 class="my-1">Nastar</h6>
-                    <h6 class="my-1">Fruit Pie</h6>
-                    <h6 class="my-1">Coffee</h6>
-                  </div>
-                  <span class="text-muted">$12</span>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-12 order-md-1 mb-4">
-              <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h4 class="my-1">Product name</h4>
-                    <h6 class="my-1">Nastar</h6>
-                    <h6 class="my-1">Fruit Pie</h6>
-                    <h6 class="my-1">Coffee</h6>
-                  </div>
-                  <span class="text-muted">$12</span>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-12 order-md-1 mb-4">
-              <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h4 class="my-1">Product name</h4>
-                    <h6 class="my-1">Nastar</h6>
-                    <h6 class="my-1">Fruit Pie</h6>
-                    <h6 class="my-1">Coffee</h6>
-                  </div>
-                  <span class="text-muted">$12</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-            <div class="col-md-12 order-md-1 mb-4">
-              <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h4 class="my-1">Product name</h4>
-                    <h6 class="my-1">Nastar</h6>
-                    <h6 class="my-1">Fruit Pie</h6>
-                    <h6 class="my-1">Coffee</h6>
-                  </div>
-                  <span class="text-muted">$12</span>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-12 order-md-1 mb-4">
-              <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h4 class="my-1">Product name</h4>
-                    <h6 class="my-1">Nastar</h6>
-                    <h6 class="my-1">Fruit Pie</h6>
-                    <h6 class="my-1">Coffee</h6>
-                  </div>
-                  <span class="text-muted">$12</span>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-12 order-md-1 mb-4">
-              <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h4 class="my-1">Product name</h4>
-                    <h6 class="my-1">Nastar</h6>
-                    <h6 class="my-1">Fruit Pie</h6>
-                    <h6 class="my-1">Coffee</h6>
-                  </div>
-                  <span class="text-muted">$12</span>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-12 order-md-1 mb-4">
-              <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h4 class="my-1">Product name</h4>
-                    <h6 class="my-1">Nastar</h6>
-                    <h6 class="my-1">Fruit Pie</h6>
-                    <h6 class="my-1">Coffee</h6>
-                  </div>
-                  <span class="text-muted">$12</span>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-12 order-md-1 mb-4">
-              <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                  <div>
-                    <h4 class="my-1">Product name</h4>
-                    <h6 class="my-1">Nastar</h6>
-                    <h6 class="my-1">Fruit Pie</h6>
-                    <h6 class="my-1">Coffee</h6>
-                  </div>
-                  <span class="text-muted">$12</span>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
-    </div>
+        <h2>Ongoing Transactions</h2>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <div class="col-md-12 order-md-1 mb-4">
+                <ul class="list-group mb-3">
+                  <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                    @foreach($ongoingTransaction as $ongoingTransactions)
+                      <h4 class="my-1">{{ $ongoingTransactions->id }}</h4>
+                        @foreach($ongoingTransaction2 as $ongoingTransaction2s)
+                        <h6 class="my-1">{{ $ongoingTransaction2s->namaMenu }}</h6>
+                        @endforeach
+                    </div>
+                    <span class="text-muted">Rp {{ $ongoingTransactions->totalHarga }}</span>
+                    @endforeach
+                  </li>
+                </ul>
+              </div>
+          </div>
+        </div>
+        <h2>History Transactions</h2>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <div class="col-md-12 order-md-1 mb-4">
+                <ul class="list-group mb-3">
+                  <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                    @foreach($historyTransaction as $historyTransactions)
+                      <h4 class="my-1">{{ $historyTransactions->id }}</h4>
+                        @foreach($historyTransaction2 as $historyTransaction2s)
+                        <h6 class="my-1">{{ $historyTransaction2s->namaMenu }}</h6>
+                        @endforeach
+                    </div>
+                    <span class="text-muted">Rp {{ $historyTransactions->totalHarga }}</span>
+                    @endforeach
+                  </li>
+                </ul>
+              </div>
+          </div>
+        </div>
+      </div>
   </main>
   <!-- End #main -->
 

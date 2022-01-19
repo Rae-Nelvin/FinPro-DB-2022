@@ -188,4 +188,9 @@ class AdminController extends Controller
         $staff->each->delete();
         return redirect('admin/staff')->with('Success', 'Your Staff has been Deleted');
     }
+
+    function logout(){
+        Auth::guard('admin')->logout();
+        return redirect('/');
+    }
 }

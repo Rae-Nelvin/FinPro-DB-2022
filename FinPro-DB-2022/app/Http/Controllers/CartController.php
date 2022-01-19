@@ -47,7 +47,7 @@ class CartController extends Controller
                 'cashierStaffID' => $cashierStaffID->id,
                 'chefStaffID' => $chefStaffID->id,
                 'totalHarga' => $menu->hargaJual * $jumlahBarang,
-                'status' => 'unpaid',
+                'status' => 'Unpaid',
             ]);
 
             $transaction = Transaction::where('status','=','unpaid')->where('pembeliID','=',Auth::user()->id)->first();

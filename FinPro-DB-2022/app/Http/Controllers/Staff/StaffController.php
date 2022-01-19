@@ -26,7 +26,7 @@ class StaffController extends Controller
         $creds = $request->only('email','password');
         if($role->jobDesc == 'Admin'){
             $guard = 'admin';
-        }else if($role->jobDesc == 'Cashier' || $role->jobDesc == 'Courrier' || $role->jobDesc == 'Chef'){
+        }else{
             $guard = 'staff';
         }
 
@@ -90,21 +90,21 @@ class StaffController extends Controller
         $delivery = DB::table('transactions')
                 ->join('users','transactions.pembeliID','=','users.id')
                 ->join('deliveries','transactions.id','=','deliveries.transaksiID')
-                ->join('staff','deliveries.deliveryStaffID','=','staff.id')
-                ->where('deliveries.deliveryStaffID','=',Auth::user()->id)
-                ->select('transactions.id as transactionID','staff.nama as nama','transactions.totalHarga as totalHarga','transactions.status as status','transactions.id as transactionsID','deliveries.alamatPembeli as alamatPembeli')
+                ->join('staff','transactions.deliveryStaffID','=','staff.id')
+                ->where('transactions.deliveryStaffID','=',Auth::user()->id)
+                ->select('transactions.id as transactionID','users.name as nama','transactions.totalHarga as totalHarga','transactions.status as status','transactions.id as transactionsID','deliveries.alamatPembeli as alamatPembeli')
                 ->get();
         $menu = DB::table('transaction_details')
                 ->join('menus','transaction_details.barangID','=','menus.id')
                 ->join('transactions','transaction_details.transaksiID','=','transactions.id')
                 ->join('deliveries','transactions.id','=','deliveries.transaksiID')
-                ->where('deliveries.deliveryStaffID','=',Auth::user()->id)
+                ->where('transactions.deliveryStaffID','=',Auth::user()->id)
                 ->select('menus.namaMenu as namaBarang','transaction_details.jumlahBarang as jumlahBarang','transaction_details.additionalNotes as additionalNotes')
                 ->get();
         return view('dashboard.staff.pages.delivery',['delivery' => $delivery, 'menu' => $menu]);
     }
 
-    function deliveryAprove($id){
+    function deliveryApprove($id){
         Transaction::where('id','=',$id)
             ->update([
                 'status' => 'Delivered'
@@ -114,7 +114,6 @@ class StaffController extends Controller
 
     function logout(){
         Auth::guard('staff')->logout();
-        Auth::guard('admin')->logout();
         return redirect('/');
     }
 }

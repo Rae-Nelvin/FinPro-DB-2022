@@ -38,7 +38,7 @@
                             </button>
                         </div>
                     </div>
-                    <a href="{{ route('admin.logout') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ml-4">Logout</a>
+                    <a href="{{ route('staff.logout') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ml-4">Logout</a>
                 </div>
             </div>
         </div>
